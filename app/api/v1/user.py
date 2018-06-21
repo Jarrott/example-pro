@@ -1,0 +1,13 @@
+# -*- encoding:utf-8 -*-
+"""
+@ Created by Seven on  2018/06/20 
+"""
+from app.libs.redprint import Redprint
+
+api = Redprint('user')
+
+
+@api.route('/')
+def create_user():
+    pass
+

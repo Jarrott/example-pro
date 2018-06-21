@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.douban.com/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+wtforms = "*"
+flask-migrate = "*"
+sqlalchemy = "*"
+flasgger = "*"
+cymysql = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.6"

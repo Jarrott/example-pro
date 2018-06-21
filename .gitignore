@@ -1,0 +1,12 @@
+*.pyc
+.vscode
+.idea/
+Pipfile.lock
+venv
+migrations
+app/.DS_Store
+
+*.pytest_cache
+app/config/securecrt.py
+imgs/
+test/
