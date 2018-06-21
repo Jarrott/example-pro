@@ -21,7 +21,7 @@ def create_client():
                 in: body
                 type: string
                 required: true
-                example: 123456@qq.com
+                example: "simple"
               - name: secret
                 in: body
                 type: string
@@ -32,11 +32,6 @@ def create_client():
                 type: int
                 required: true
                 example: 100
-              - name: nickname
-                in: body
-                type: string
-                required: true
-                example: pedro
             responses:
               200:
                 description: 返回信息
