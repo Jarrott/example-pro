@@ -17,12 +17,12 @@ def create_client():
             发送json数据进行注册(注册为开发者的type为300)
             ---
             parameters:
-              - name: account
+              - name: suername
                 in: body
                 type: string
                 required: true
                 example: "simple"
-              - name: secret
+              - name: password
                 in: body
                 type: string
                 required: true
