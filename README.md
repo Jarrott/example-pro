@@ -7,7 +7,12 @@
 
 ### 运行服务
 1.首先将“77.art”加入到自己电脑的hosts中
+
 2.将项目下载好后，运行bigdata.py即可。
+
+3.在 Dockerfile 中安装依赖，加--system参数表示使用 pip 直接安装相应依赖，不创建虚拟环境。
+
+ `RUN pipenv install --deploy --system`
 
 ### 项目API接口展示
 
