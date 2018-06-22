@@ -4,7 +4,10 @@
 """
 from datetime import datetime
 from contextlib import contextmanager
-from flask_sqlalchemy import SQLAlchemy as _SQLAlchemy, BaseQuery
+from flask_sqlalchemy import (SQLAlchemy as _SQLAlchemy,
+                              BaseQuery, orm, inspect)
+
+from app.libs.error_code import NotFound
 
 
 class SQLAlchemy(_SQLAlchemy):
@@ -42,7 +45,17 @@ class Query(BaseQuery):
         """
         rv = self.get(ident)
         if rv is None:
-            pass
+            raise NotFound()
+        return rv
+
+    def first_or_404(self):
+        """
+        重写此方法，实现出错时可以抛出异常
+        :return:
+        """
+        rv = self.first()
+        if not rv:
+            raise NotFound()
         return rv
 
 
@@ -76,8 +89,70 @@ class Base(db.Model):
     def delete(self):
         self.deleted = 1
 
+    def append(self, *keys):
+        for key in keys:
+            self.fields.append(key)
+        return self
 
-def append(self, *keys):
-    for key in keys:
-        self.fields.append(key)
-    return self
+
+class MixinModelJSONSerializer:
+    """
+    序列化模型
+    """
+
+    @orm.reconstructor
+    def init_on_load(self):
+        self._fields = []
+        self._exclude = []
+
+        self._set_fields()
+        self.__prune_fields()
+
+    def _set_fields(self):
+        pass
+
+    def __prune_fields(self):
+        columns = inspect(self.__class__).columns
+        if not self._fields:
+            all_columns = set([column.name for column in columns])
+            self._fields = list(all_columns - set(self._exclude))
+
+    def hide(self, *args):
+        for key in args:
+            self._fields.remove(key)
+        return self
+
+    def keys(self):
+        return self._fields
+
+    def __getitem__(self, key):
+        return getattr(self, key)
+
+
+class MixinJSONSerializer:
+    _fields = []
+    _exclude = []
+
+    def __init__(self):
+        self._set_fields()
+        self._prune_fields()
+
+    def _set_fields(self):
+        pass
+
+    def _prune_fields(self):
+        if not self._fields:
+            self.__init_subclass__()
+            all_columns = set(self.__dict__.keys())
+            self._fields = list(all_columns - set(self._exclude))
+
+    def hide(self, *args):
+        for key in args:
+            self._fields.remove(key)
+        return self
+
+    def keys(self):
+        return self._fields
+
+    def __getitem__(self, key):
+        return getattr(self, key)

@@ -2,48 +2,30 @@
 """
 @ Created by Seven on  2018/06/20 
 """
-from flask import Flask
+from datetime import date
+from flask import Flask as _Flask
+from flask.json import JSONEncoder as _JsonEncoder
+
+from app.libs.error_code import ServerError
 
 
-def register_database(app):
+class JsonEncoder(_JsonEncoder):
+    def default(self, o):
+        """
+        重写Flask JsonEncoder
+        实现支持对象序列化
+        :param o:
+        :return:
+        """
+        if hasattr(o, 'keys') and hasattr(o, '__getitem__'):
+            return dict(o)
+        if isinstance(o, date):
+            return o.strftime('%Y-%m-%d')
+        raise ServerError()
+
+
+class Flask(_Flask):
     """
-    注册数据库，初始化数据库
-    :param app:
-    :return:
+    重写Flask
     """
-    from app.libs.model_base import db
-    db.init_app(app)
-    with app.app_context():
-        db.create_all()
-
-
-def register_blueprints(app):
-    """
-    注册蓝图
-    :param app:
-    :return:
-    """
-    from app.api.v1 import create_blueprint
-    app.register_blueprint(create_blueprint(), url_prefix='/v1')
-
-
-def register_swagger(app):
-    from flasgger import Swagger
-    template = {
-        "host": "77.art:5000"
-    }
-    Swagger(app, template=template)
-
-
-def create_app():
-    """
-    初始化项目
-    :return:
-    """
-    app = Flask(__name__)
-    app.config.from_object('app.config.setting')
-    app.config.from_object('app.config.securecrt')
-    register_blueprints(app)
-    register_database(app)
-    register_swagger(app)
-    return app
+    json_encoder = JsonEncoder

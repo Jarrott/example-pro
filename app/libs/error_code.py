@@ -5,6 +5,24 @@
 from .error import JsonTypeException
 
 
+class Success(JsonTypeException):
+    """
+    操作成功
+    """
+    code = 201
+    message = 'ok'
+    error_code = 0
+
+
+class DeleteSuccess(JsonTypeException):
+    """
+    删除成功
+    """
+    code = 204
+    message = "删除成功"
+    error_code = 0
+
+
 class ClientTypeError(JsonTypeException):
     """
     用户注册相关异常
@@ -48,12 +66,3 @@ class AuthFailed(JsonTypeException):
     code = 401
     message = "无权限访问"
     error_code = 10005
-
-
-class Success(JsonTypeException):
-    """
-    操作成功
-    """
-    code = 201
-    message = 'ok'
-    error_code = 0
