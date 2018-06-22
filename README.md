@@ -21,7 +21,7 @@ http://77.art:5000/apidocs
 ![项目接口](https://github.com/litt1eseven/python-project/blob/master/Company-project/images/api-list-sw0.9.png)
 
 ## TODO LIST
-
+- [x] 重构架构，优化代码
 - [x] 用户登录、注册
 - [ ] 密码修改，重置
 - [ ] 邮件发送
