@@ -28,3 +28,6 @@ SWAGGER = {
         }
     ],
 }
+
+# Token 过期时间
+JWT_TOKEN_EXPIRES = 1 * 24 * 3600

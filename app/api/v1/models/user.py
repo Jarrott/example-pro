@@ -3,6 +3,8 @@
 @ Created by Seven on  2018/06/20 
 """
 from werkzeug.security import generate_password_hash, check_password_hash
+
+from app.libs.error_code import NotFound, AuthFailed
 from app.libs.model_base import db, Base
 
 
@@ -32,3 +34,12 @@ class User(Base):
             user.username = username
             user.password = password
             db.session.add(user)
+
+    @staticmethod
+    def verify(username, password):
+        user = User.query.filter_by(username=username).first()
+        if not user:
+            raise NotFound(message="用户没有找到 ~ !")
+        if not user.check_password(password):
+            raise AuthFailed()
+        return {'uid': user.id}

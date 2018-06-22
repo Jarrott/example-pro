@@ -32,6 +32,24 @@ class ParameterException(JsonTypeException):
     error_code = 10008
 
 
+class NotFound(JsonTypeException):
+    """
+    404错误
+    """
+    code = 404
+    message = "找不到当前资源 ~ "
+    error_code = 10013
+
+
+class AuthFailed(JsonTypeException):
+    """
+    授权失败
+    """
+    code = 401
+    message = "无权限访问"
+    error_code = 10005
+
+
 class Success(JsonTypeException):
     """
     操作成功

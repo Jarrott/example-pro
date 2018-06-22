@@ -16,12 +16,14 @@ def create_client():
     """ 用户注册
             发送json数据进行注册(注册为开发者的type为300)
             ---
+            tags:
+              - 后台登录权限相关
             parameters:
-              - name: suername
+              - name: username
                 in: body
                 type: string
                 required: true
-                example: "simple"
+                example: simple
               - name: password
                 in: body
                 type: string
@@ -36,11 +38,11 @@ def create_client():
               200:
                 description: 返回信息
                 examples:
-                  success : {"error_code": 0,"msg": "ok","request": "POST /persona/v1/client/register"}
+                  success : {"error_code": 0,"msg": "ok","request": "POST /v1/client/register"}
         """
     form = ClientForm().validate_for_api()
     promise = {
-        ClientTypeEnum.USER_EMAIL: __register_user_by_username,
+        ClientTypeEnum.USER_NAME: __register_user_by_username,
     }
     promise[form.type.data]()
     return Success()
