@@ -14,7 +14,7 @@ api = Redprint('user')
 
 @api.route('/<int:uid>', methods=['GET'])
 @auth.login_required
-def create_user(uid):
+def get_user(uid):
     """
     重写了sqlalchemy中的get_or_404
     出错可以返回想要的报错信息
