@@ -2,6 +2,8 @@
 """
 @ Created by Seven on  2018/06/20 
 """
+from flask_migrate import Migrate
+
 from .app import Flask
 
 
@@ -13,6 +15,7 @@ def register_database(app):
     """
     from app.libs.model_base import db
     db.init_app(app)
+    # Migrate(app, db)
     with app.app_context():
         db.create_all()
 

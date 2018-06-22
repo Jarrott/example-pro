@@ -5,7 +5,7 @@
 
 > 运行服务的话需要在config目录下新建一个“securecrt”文件，并填入对应的mysql信息 *(代码在私有仓库这条信息请忽略)*
 
-### 运行服务
+## 运行服务
 1.首先将“77.art”加入到自己电脑的hosts中
 
 2.将项目下载好后，运行bigdata.py即可。
@@ -14,11 +14,17 @@
 
  `RUN pipenv install --deploy --system`
 
-### 项目API接口展示
+## 项目API接口展示
 
 http://77.art:5000/apidocs
 
 ![项目接口](https://github.com/litt1eseven/python-project/blob/master/Company-project/images/api-list-sw0.9.png)
+
+## Deploy
+### Docker部署
+
+  wait...
+
 
 ## TODO LIST
 - [x] 重构架构，优化代码

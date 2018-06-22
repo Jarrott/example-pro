@@ -2,13 +2,14 @@
 """
 @ Created by Seven on  2018/06/22 
 """
-from flask import current_app, g
+from flask import current_app, g, request
 from collections import namedtuple
 from flask_httpauth import HTTPBasicAuth
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer,
                           BadSignature, SignatureExpired)
 
-from app.libs.error_code import AuthFailed
+from app.libs.error_code import AuthFailed, Forbidden
+from app.libs.scope import is_in_scope
 
 auth = HTTPBasicAuth()
 User = namedtuple('User', ['uid', 'ac_type', 'scope'])
@@ -32,6 +33,11 @@ def verify_password(token, password):
 
 
 def verify_auth_token(token):
+    """
+    验证token信息和所拥有的权限
+    :param token:
+    :return:
+    """
     s = Serializer(current_app.config['SECRET_KEY'])
     try:
         data = s.loads(token)
@@ -43,4 +49,8 @@ def verify_auth_token(token):
                          error_code=10002)
     uid = data['uid']
     ac_type = data['type']
-    return User(uid, ac_type, '')
+    scope = data['scope']
+    allow = is_in_scope(scope, request.endpoint)
+    if not allow:
+        raise Forbidden()
+    return User(uid, ac_type, scope)

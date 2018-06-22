@@ -12,6 +12,8 @@ from app.libs.model_base import (db, Base,
 class User(Base, MixinModelJSONSerializer):
     id = db.Column(db.Integer, primary_key=True, doc="用户自增ID")
     username = db.Column(db.String(24), unique=True, nullable=True, doc="用户名")
+    nickname = db.Column(db.String(24), unique=True, nullable=False, doc="用户昵称")
+    auth = db.Column(db.SmallInteger, default=1)
     _password = db.Column('password', db.String(100), nullable=True, doc="用户密码")
 
     # def keys(self):
@@ -39,11 +41,12 @@ class User(Base, MixinModelJSONSerializer):
         return check_password_hash(self._password, password)
 
     @staticmethod
-    def register_by_username(username, password):
+    def register_by_username(username, password, nickname):
         with db.auto_commit():
             user = User()
             user.username = username
             user.password = password
+            user.nickname = nickname
             db.session.add(user)
 
     @staticmethod
@@ -53,4 +56,5 @@ class User(Base, MixinModelJSONSerializer):
             raise NotFound(message="用户没有找到 ~ !")
         if not user.check_password(password):
             raise AuthFailed()
-        return {'uid': user.id}
+        scope = 'AdminScope' if user.auth == 777 else 'UserScope'
+        return {'uid': user.id, 'scope': scope}

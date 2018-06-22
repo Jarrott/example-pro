@@ -69,4 +69,5 @@ def create_wx():
 def __register_user_by_username():
     form = UserForm().validate_for_api()
     User.register_by_username(form.username.data,
-                              form.password.data)
+                              form.password.data,
+                              form.nickname.data)

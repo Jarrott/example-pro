@@ -48,6 +48,12 @@ class UserForm(ClientForm):
         regexp(r'^[A-Za-z0-9_*&$#@]{6,22}$', message='用户密码必须在6~22位之间')
     ])
 
+    nickname = StringField(
+        validators=[
+            DataRequired(message="用户昵称不能为空"),
+            Length(6, 32, message="用户昵称必须在6~32位之间")
+        ])
+
     def validate_username(self, value):
         """
         查询用户是否已经存在
@@ -56,3 +62,12 @@ class UserForm(ClientForm):
         """
         if User.query.filter_by(username=value.data).first():
             raise ValidationError('该用户已注册')
+
+    def validate_nickname(self, value):
+        """
+        查询用户昵称是否已经存在
+        :param value:
+        :return:
+        """
+        if User.query.filter_by(nickname=value.data).first():
+            raise ValidationError('该昵称已被占用')

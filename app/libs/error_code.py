@@ -67,5 +67,14 @@ class AuthFailed(JsonTypeException):
     授权失败
     """
     code = 401
-    message = "无权限访问"
+    message = "授权出错 ~"
+    error_code = 10005
+
+
+class Forbidden(JsonTypeException):
+    """
+    无权限操作
+    """
+    code = 403
+    message = "您没有访问此功能的权限 ~"
     error_code = 10005
