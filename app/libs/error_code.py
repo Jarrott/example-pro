@@ -17,10 +17,13 @@ class Success(JsonTypeException):
 class DeleteSuccess(JsonTypeException):
     """
     删除成功
+    因为204是 not content
+    所以稍微违背rest开发原则
+    采用202
     """
-    code = 204
+    code = 202
     message = "删除成功"
-    error_code = 0
+    error_code = 1
 
 
 class ClientTypeError(JsonTypeException):

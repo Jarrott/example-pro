@@ -44,7 +44,7 @@ class Query(BaseQuery):
         :return:
         """
         rv = self.get(ident)
-        if rv is None:
+        if not rv:
             raise NotFound()
         return rv
 
