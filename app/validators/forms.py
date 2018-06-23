@@ -71,3 +71,8 @@ class UserForm(ClientForm):
         """
         if User.query.filter_by(nickname=value.data).first():
             raise ValidationError('该昵称已被占用')
+
+
+class SearchForm(BaseForm):
+    """搜索用到的关键字"""
+    q = StringField(validators=DataRequired())

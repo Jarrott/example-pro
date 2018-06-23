@@ -26,7 +26,7 @@ def register_blueprints(app):
     :return:
     """
     from app.api.seven.v1 import create_blueprint
-    app.register_blueprint(create_blueprint(), url_prefix='/v1')
+    app.register_blueprint(create_blueprint(), url_prefix='/seven/v1')
 
 
 def register_swagger(app):

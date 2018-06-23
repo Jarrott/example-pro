@@ -5,7 +5,7 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app.libs.error_code import NotFound, AuthFailed
-from app.libs.model_base import (db, Base,
+from app.libs.model_base import (db, Base, orm,
                                  MixinModelJSONSerializer)
 
 
@@ -16,8 +16,16 @@ class User(Base, MixinModelJSONSerializer):
     auth = db.Column(db.SmallInteger, default=1)
     _password = db.Column('password', db.String(100), nullable=True, doc="用户密码")
 
+    # 特殊场景设置，有的地方如果不需要nickname 在视图逻辑层调用hide
+    # @orm.reconstructor
+    # def __init__(self):
+    #     self.fields = ['id', 'username', 'nickname', 'auth']
+    #
     # def keys(self):
-    #     return ['id', 'username']
+    #     return self.fileds
+    #
+    # def hide(self, field):
+    #     self.fields.remove(field)
 
     def _set_fields(self):
         """
