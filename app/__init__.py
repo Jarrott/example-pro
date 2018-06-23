@@ -2,7 +2,6 @@
 """
 @ Created by Seven on  2018/06/20 
 """
-from flask_migrate import Migrate
 
 from .app import Flask
 
@@ -26,7 +25,7 @@ def register_blueprints(app):
     :param app:
     :return:
     """
-    from app.api.v1 import create_blueprint
+    from app.api.seven.v1 import create_blueprint
     app.register_blueprint(create_blueprint(), url_prefix='/v1')
 
 

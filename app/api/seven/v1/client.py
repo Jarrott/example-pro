@@ -6,7 +6,7 @@ from app.libs.error_code import Success
 from app.libs.redprint import Redprint
 from app.libs.enums import ClientTypeEnum
 from app.validators.forms import ClientForm, UserForm
-from .models.user import User
+from app.api.seven.models.user import User
 
 api = Redprint('client')
 

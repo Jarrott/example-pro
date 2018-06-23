@@ -3,7 +3,7 @@
 @ Created by Seven on  2018/06/22 
 """
 from app import create_app
-from app.api.v1.models import db, User
+from app.api.seven.models import db, User
 
 """创建超级管理员
 """

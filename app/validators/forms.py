@@ -6,7 +6,7 @@ from wtforms import (StringField,
                      PasswordField, IntegerField)
 from wtforms.validators import (DataRequired, Length, regexp, ValidationError)
 
-from app.api.v1.models import User
+from app.api.seven.models import User
 from app.libs.enums import ClientTypeEnum
 from app.libs.form_base import BaseForm
 

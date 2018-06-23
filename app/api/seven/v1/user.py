@@ -4,7 +4,7 @@
 """
 from flask import jsonify, g
 
-from app.api.v1.models import User, db
+from app.api.seven.models import User, db
 from app.libs.error_code import DeleteSuccess
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
@@ -49,3 +49,15 @@ def delete_user():
         user = User.query.filter_by(id=int(uid)).first_or_404()
         user.delete()
         return DeleteSuccess()
+
+
+@api.route('/get_myself', methods=['GET'])
+@auth.login_required
+def get_user():
+    """
+    查看自己的资料
+    :return:
+    """
+    uid = g.user.uid
+    user = User.query.filter_by(id=int(uid)).first_or_404()
+    return jsonify(user)
