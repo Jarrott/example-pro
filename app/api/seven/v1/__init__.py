@@ -4,7 +4,7 @@
 """
 from flask import Blueprint
 from app.api.seven.v1 import (home, client,
-                              user)
+                              user, park)
 from app.api.seven.v1 import token
 
 
@@ -19,4 +19,5 @@ def create_blueprint():
     client.api.register(bp_v1)
     user.api.register(bp_v1)
     token.api.register(bp_v1)
+    park.api.register(bp_v1)
     return bp_v1

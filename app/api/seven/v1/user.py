@@ -77,3 +77,13 @@ def change_password():
         return Success(message="密码修改成功!")
     else:
         return Failed(message="密码修改失败!")
+
+
+@api.route('/flash/message', methods=['POST'])
+@auth.login_required
+def show_message():
+    """
+    消息提醒
+    :return:
+    """
+    pass
