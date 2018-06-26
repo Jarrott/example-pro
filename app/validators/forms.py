@@ -3,7 +3,8 @@
 @ Created by Seven on  2018/06/20 
 """
 from wtforms import (StringField,
-                     PasswordField, IntegerField)
+                     PasswordField, IntegerField,
+                     SelectField)
 from wtforms.validators import (DataRequired, Length, regexp, ValidationError)
 
 from app.api.seven.models import User
@@ -81,3 +82,18 @@ class ChangePasswordForm(BaseForm):
 class SearchForm(BaseForm):
     """搜索用到的关键字"""
     q = StringField(validators=DataRequired())
+
+
+class ParkPushForm(BaseForm):
+    """需求推送"""
+    choices = [(1, '资金'), (2, '人才'), (3, '物业'), (4, '政策'), (5, '其他')]
+    type = SelectField('需求分类', validators=[DataRequired()], choices=choices, coerce=int)
+    company = StringField('推送企业', validators=[DataRequired(message="企业名称不能为空！")])
+    content = StringField('推送内容', validators=[DataRequired(message="推送内容不能为空！")])
+
+    def validate_type(self, value):
+        try:
+            client = ClientTypeEnum(value.data)
+        except ValueError as e:
+            raise e
+        self.type.data = client

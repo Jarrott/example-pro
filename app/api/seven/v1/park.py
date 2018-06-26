@@ -11,4 +11,8 @@ api = Redprint('park')
 @api.route('', methods=['POST'])
 @auth.login_required
 def push_demand():
+    """
+    需求推送
+    :return:
+    """
     pass
