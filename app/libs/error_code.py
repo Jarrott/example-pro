@@ -22,7 +22,7 @@ class DeleteSuccess(JsonTypeException):
     采用202
     """
     code = 202
-    message = "删除成功"
+    message = '删除成功'
     error_code = 1
 
 
@@ -40,7 +40,7 @@ class ServerError(JsonTypeException):
     服务器异常
     """
     code = 500
-    message = "服务器异常！"
+    message = '服务器异常！'
     error_code = 10001
 
 
@@ -58,7 +58,7 @@ class NotFound(JsonTypeException):
     404错误
     """
     code = 404
-    message = "找不到当前资源 ~ "
+    message = '找不到当前资源 ~ '
     error_code = 10013
 
 
@@ -67,7 +67,7 @@ class AuthFailed(JsonTypeException):
     授权失败
     """
     code = 401
-    message = "授权出错 ~"
+    message = '授权出错 ~'
     error_code = 10005
 
 
@@ -76,5 +76,11 @@ class Forbidden(JsonTypeException):
     无权限操作
     """
     code = 403
-    message = "您没有访问此功能的权限 ~"
+    message = '您没有访问此功能的权限 ~'
     error_code = 10005
+
+
+class Failed(JsonTypeException):
+    code = 404
+    msg = '失败的动作 ~'
+    error_code = 100012

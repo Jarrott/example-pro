@@ -20,7 +20,7 @@ def verify_password(token, password):
     """
     装饰器
     验证token是否合法
-    :param username:
+    :param token:
     :param password:
     :return:
     """

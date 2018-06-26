@@ -73,6 +73,11 @@ class UserForm(ClientForm):
             raise ValidationError('该昵称已被占用')
 
 
+class ChangePasswordForm(BaseForm):
+    old_password = PasswordField('原密码', validators=[DataRequired(message="不能为空")])
+    new_password = PasswordField('新密码', validators=[DataRequired(message="不能为空")])
+
+
 class SearchForm(BaseForm):
     """搜索用到的关键字"""
     q = StringField(validators=DataRequired())

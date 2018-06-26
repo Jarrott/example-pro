@@ -66,7 +66,6 @@ class Base(db.Model):
     __abstract__ = True
     deleted = db.Column(db.Integer, default=0, doc="软删除")
     create_time = db.Column(db.Integer)
-    active = db.Column(db.Integer, default=0, doc="用户是否被禁用")
 
     def __init__(self):
         self.create_time = int(datetime.now().timestamp())

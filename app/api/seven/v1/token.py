@@ -3,7 +3,8 @@
 @ Created by Seven on  2018/06/22 
 """
 from flask import current_app, jsonify
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from itsdangerous import (TimedJSONWebSignatureSerializer
+                          as Serializer)
 
 from app.api.seven.models import User
 from app.libs.enums import ClientTypeEnum
@@ -16,7 +17,7 @@ api = Redprint('token')
 @api.route('', methods=['post'])
 def get_token():
     """
-    用户可以获取token的接口
+    用户可以获取的接口
     :return:
     """
     form = ClientForm().validate_for_api()

@@ -40,7 +40,7 @@ class UserScope(Scope):
     用户访问的接口
     auth:1
     """
-    allow_api = ['seven_v1.user+delete_user']
+    allow_api = ['seven_v1.user+delete_user','seven_v1.user+change_password']
 
     # def __init__(self):
     #     self + AdminScope
