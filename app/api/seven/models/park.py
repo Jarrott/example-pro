@@ -13,8 +13,8 @@ class ParkPush(Base, MixinModelJSONSerializer):
     """
     __tablename__ = 'park_push'
     id = db.Column(db.Integer, primary_key=True, doc="需求推送自增ID")
-    demand = db.Column(db.String(20))
     company = db.Column(db.String(20))
+    type = db.Column(db.SmallInteger)
     content = db.Column(db.Text)
 
 

@@ -32,7 +32,7 @@ class AdminScope(Scope):
     管理员访问的接口
     auth:777
     """
-    allow_module = ['seven_v1.user']
+    allow_module = ['seven_v1.user', 'seven_v1.park']
 
 
 class UserScope(Scope):
@@ -40,7 +40,7 @@ class UserScope(Scope):
     用户访问的接口
     auth:1
     """
-    allow_api = ['seven_v1.user+delete_user','seven_v1.user+change_password']
+    allow_api = ['seven_v1.user+delete_user', 'seven_v1.user+change_password']
 
     # def __init__(self):
     #     self + AdminScope

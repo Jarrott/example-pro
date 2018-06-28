@@ -93,7 +93,13 @@ class ParkPushForm(BaseForm):
 
     def validate_type(self, value):
         try:
-            client = ClientTypeEnum(value.data)
+            client = value.data
         except ValueError as e:
             raise e
         self.type.data = client
+
+
+class ParkBreakingForm(BaseForm):
+    """园区大事件"""
+    title = StringField(validators=[DataRequired(message="标题不能为空！")])
+    remark = StringField(validators=[DataRequired(message="备注不能为空！")])
