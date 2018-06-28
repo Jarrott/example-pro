@@ -2,12 +2,15 @@
 """
 @ Created by Seven on  2018/06/26 
 """
-from app.api.seven.models import ParkPush, ParkBreaking
+
 from app.libs.error_code import Success
 from app.libs.model_base import db
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
-from app.validators.forms import (ParkPushForm, ParkBreakingForm)
+from app.validators.forms import (ParkPushForm, ParkBreakingForm,
+                                  ParkNoticesForm, ParkNewsForm)
+from app.api.seven.models import (ParkPush, ParkBreaking,
+                                  ParkNews)
 
 api = Redprint('park')
 
@@ -37,7 +40,14 @@ def news():
     新闻发布
     :return:
     """
-    pass
+    form = ParkNewsForm().validate_for_api()
+    with db.auto_commit():
+        data = ParkNews()
+        data.title = form.title.data
+        data.image = form.image.data
+        data.content = form.content.data
+        db.session.add(data)
+    return Success(message="新闻发布成功!")
 
 
 @api.route('/notices', methods=['POST'])

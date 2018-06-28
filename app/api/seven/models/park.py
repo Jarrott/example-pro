@@ -3,6 +3,8 @@
 @ Created by Seven on  2018/06/26 
 @ 园区综合管理
 """
+from flask import url_for
+
 from app.libs.model_base import (db, Base,
                                  MixinModelJSONSerializer)
 
@@ -25,8 +27,16 @@ class ParkNews(Base, MixinModelJSONSerializer):
     __tablename__ = 'park_news'
     id = db.Column(db.Integer, primary_key=True, doc="新闻动态自增ID")
     title = db.Column(db.String(20))
-    image = db.Column(db.String(20))
+    _image = db.Column('image', db.String(32))
     content = db.Column(db.Text)
+
+    @property
+    def image(self):
+        return url_for('/', filename=self.image)
+
+    @image.setter
+    def image(self, filename):
+        self._image = filename
 
 
 class ParkEduNotices(Base, MixinModelJSONSerializer):
@@ -36,9 +46,17 @@ class ParkEduNotices(Base, MixinModelJSONSerializer):
     __tablename__ = 'park_notices'
     id = db.Column(db.Integer, primary_key=True, doc="园区动态自增ID")
     title = db.Column(db.String(20))
-    image = db.Column(db.String(20))
+    _image = db.Column('image', db.String(32))
     type = db.Column(db.String(20))
     content = db.Column(db.Text)
+
+    @property
+    def image(self):
+        return url_for('/', filename=self._image)
+
+    @image.setter
+    def image(self, filename):
+        self._image = filename
 
 
 class ParkPolicy(Base, MixinModelJSONSerializer):
@@ -48,10 +66,34 @@ class ParkPolicy(Base, MixinModelJSONSerializer):
     __tablename__ = 'park_policy'
     id = db.Column(db.Integer, primary_key=True, doc="政策动态自增ID")
     title = db.Column(db.String(20))
-    image = db.Column(db.String(20))
-    file = db.Column(db.String(20))
+    _image = db.Column('image', db.String(32))
+    _file = db.Column('file', db.String(32))
     type = db.Column(db.String(20))
     content = db.Column(db.Text)
+
+    @property
+    def image(self):
+        """
+        处理图片
+        :return:
+        """
+        return url_for('/', filename=self._image)
+
+    @image.setter
+    def image(self, filename):
+        self._image = filename
+
+    @property
+    def file(self):
+        """
+        处理文件
+        :return:
+        """
+        return url_for('/', filename=self._file)
+
+    @file.setter
+    def file(self, filename):
+        self._file = filename
 
 
 class ParkBreaking(Base, MixinModelJSONSerializer):

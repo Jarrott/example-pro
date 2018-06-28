@@ -103,3 +103,23 @@ class ParkBreakingForm(BaseForm):
     """园区大事件"""
     title = StringField(validators=[DataRequired(message="标题不能为空！")])
     remark = StringField(validators=[DataRequired(message="备注不能为空！")])
+
+
+class ParkNewsForm(BaseForm):
+    """新闻动态"""
+    choices = [(1, '园区公告'), (2, '政府公告')]
+    title = StringField(validators=[DataRequired(message="标题不能为空！")])
+    image = StringField(validators=[DataRequired(message="图片不能为空！")])
+    content = StringField(validators=[DataRequired(message="公告内容不能为空")])
+
+
+class ParkNoticesForm(BaseForm):
+    """园区&政府公共"""
+    choices = [(1, '园区公告'), (2, '政府公告')]
+    title = StringField(validators=[DataRequired(message="标题不能为空！")])
+    image = StringField(validators=[DataRequired(message="图片不能为空！")])
+    type = SelectField(validators=[DataRequired(message="公告类型不能为空！")], choices=choices)
+    content = StringField(validators=[DataRequired(message="公告内容不能为空")])
+
+    # def validate_title(self):
+    #     pass
