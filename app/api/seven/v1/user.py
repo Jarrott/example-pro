@@ -16,12 +16,26 @@ api = Redprint('user')
 @api.route('/<int:uid>', methods=['GET'])
 @auth.login_required
 def super_get_user(uid):
-    """
-    重写了sqlalchemy中的get_or_404
-    出错可以返回想要的报错信息
-    filter_by 过滤了软删除的用户
-    所以filter_by 也是必不可少的
-    """
+    """ 查询用户
+            重写了sqlalchemy中的get_or_404
+            出错可以返回想要的报错信息
+            filter_by 过滤了软删除的用户
+            所以filter_by 也是必不可少的
+            ---
+            tags:
+              - 超级管理员模块
+            parameters:
+              - name: id
+                in: body
+                type: int
+                required: true
+                example: 1
+            responses:
+              200:
+                description: 返回信息
+                examples:
+                  success : {"error_code": 0,"msg": "ok","request": "GET /seven/v1/<id>","data":"$user"}
+        """
     user = User.query.filter_by(id=int(uid)).first_or_404()
     return jsonify(user)
 
@@ -29,9 +43,22 @@ def super_get_user(uid):
 @api.route('/<int:uid>', methods=['DELETE'])
 @auth.login_required
 def super_delete_user(uid):
-    """
-    删除用户
-    """
+    """ 删除用户
+            ---
+            tags:
+              - 超级管理员模块
+            parameters:
+              - name: id
+                in: body
+                type: int
+                required: true
+                example: 1
+            responses:
+              200:
+                description: 返回信息
+                examples:
+                  success : {"error_code": 0,"msg": "ok","request": "DELETE /seven/v1/<id>","data":"$user"}
+        """
     with db.auto_commit():
         user = User.query.filter_by(id=int(uid)).first_or_404()
         user.delete()

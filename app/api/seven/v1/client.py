@@ -14,7 +14,7 @@ api = Redprint('client')
 @api.route('/register', methods=['POST'])
 def create_client():
     """ 用户注册
-            发送json数据进行注册(注册为开发者的type为300)
+            :return: {username}
             ---
             tags:
               - 后台登录权限相关
@@ -45,7 +45,7 @@ def create_client():
         ClientTypeEnum.USER_NAME: __register_user_by_username,
     }
     promise[form.type.data]()
-    return Success()
+    return Success(message="用户注册成功！")
 
 
 @api.route('/register/by_mobile')
