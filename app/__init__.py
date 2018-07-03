@@ -29,10 +29,17 @@ def register_blueprints(app):
     app.register_blueprint(create_blueprint(), url_prefix='/seven/v1')
 
 
+# 解决跨域
+def apply_cors(app):
+    from flask_cors import CORS
+    CORS(app)
+
+
 def register_swagger(app):
     from flasgger import Swagger
     template = {
-        "host": "77.art:5000"
+        "host": "77.art:5000",
+        "securityDefinitions": {'basicAuth': {'type': 'basic'}}
     }
     Swagger(app, template=template)
 
@@ -45,6 +52,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object('app.config.setting')
     app.config.from_object('app.config.securecrt')
+    apply_cors(app)
     register_blueprints(app)
     register_database(app)
     register_swagger(app)

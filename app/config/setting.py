@@ -7,7 +7,7 @@
 
 DEBUG = True
 SERVER_NAME = '77.art:5000'
-
+JSON_AS_ASCII = False
 # Swagger 配置+跨域请求
 
 SWAGGER = {

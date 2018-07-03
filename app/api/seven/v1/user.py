@@ -33,8 +33,11 @@ def super_get_user(uid):
             responses:
               200:
                 description: 返回信息
+                schema:
+                    id: User
+                    type: object
                 examples:
-                  success : {"error_code": 0,"msg": "ok","request": "GET /seven/v1/<id>","data":"$user"}
+                  success : {"error_code": 0,"msg": "ok","request": "GET /seven/v1/<id>"}
         """
     user = User.query.filter_by(id=int(uid)).first_or_404()
     return jsonify(user)
@@ -57,7 +60,7 @@ def super_delete_user(uid):
               200:
                 description: 返回信息
                 examples:
-                  success : {"error_code": 0,"msg": "ok","request": "DELETE /seven/v1/<id>","data":"$user"}
+                  success : {"error_code": 0,"msg": "ok","request": "DELETE /seven/v1/<id>"}
         """
     with db.auto_commit():
         user = User.query.filter_by(id=int(uid)).first_or_404()
@@ -69,8 +72,21 @@ def super_delete_user(uid):
 @auth.login_required
 def delete_user():
     """
-    用户清除自己的账号
-    :return:
+    清空账号
+        ---
+        tags:
+          - 用户模块
+        parameters:
+          - name: id
+            in: body
+            type: int
+            required: true
+            example: 1
+        responses:
+          200:
+            description: 返回信息
+            examples:
+              success : {"error_code": 0,"msg": "ok","request": "DELETE /seven/v1/clear_myself"}
     """
     uid = g.user.uid
     with db.auto_commit():
@@ -96,7 +112,20 @@ def get_user():
 def change_password():
     """
     修改密码
-    :return:
+        ---
+        tags:
+          - 用户模块
+        parameters:
+          - name: id
+            in: body
+            type: int
+            required: true
+            example: 1
+        responses:
+          200:
+            description: 返回信息
+            examples:
+              success : {"error_code": 0,"msg": "ok","request": "POST /seven/v1/change/password"}
     """
     form = ChangePasswordForm().validate_for_api()
     ok = User.change_password(form.old_password.data, form.new_password.data)

@@ -113,11 +113,19 @@ class ParkCircum(Base, MixinModelJSONSerializer):
     __tablename__ = 'park_circum'
     id = db.Column(db.Integer, primary_key=True, doc="周边自增ID")
     title = db.Column(db.String(20))
-    image = db.Column(db.String(20))
+    _image = db.Column(db.String(20))
     city = db.Column(db.String(20))
     url = db.Column(db.String(20))
     mobile = db.Column(db.String(20))
     content = db.Column(db.Text)
+
+    @property
+    def image(self):
+        return url_for('/', filename=self.image)
+
+    @image.setter
+    def image(self, filename):
+        self._image = filename
 
 
 class ParkIndustry(Base, MixinModelJSONSerializer):
@@ -128,8 +136,17 @@ class ParkIndustry(Base, MixinModelJSONSerializer):
     id = db.Column(db.Integer, primary_key=True, doc="行业资讯自增ID")
     title = db.Column(db.String(20))
     type = db.Column(db.String(20))
+    _image = db.Column(db.String(20))
     content = db.Column(db.String(20))
     remark = db.Column(db.String(20))
+
+    @property
+    def image(self):
+        return url_for('/', filename=self.image)
+
+    @image.setter
+    def image(self, filename):
+        self._image = filename
 
 
 class ParkMerchant(Base, MixinModelJSONSerializer):
@@ -138,8 +155,7 @@ class ParkMerchant(Base, MixinModelJSONSerializer):
     """
     __tablename__ = 'park_merchant'
     id = db.Column(db.Integer, primary_key=True, doc="招商资讯自增ID")
-    company = db.Column(db.String(20))
-    city = db.Column(db.String(20))
+    title = db.Column(db.String(20))
     content = db.Column(db.String(20))
 
 
@@ -149,6 +165,87 @@ class ParkIndustryShow(Base, MixinModelJSONSerializer):
     """
     __tablename__ = 'park_ind_show'
     id = db.Column(db.Integer, primary_key=True, doc="资讯分类自增ID")
-    name = db.Column(db.String(20))
+    type = db.Column(db.String(20))
     active = db.Column(db.SmallInteger, default=0)
-    image = db.Column(db.String(20))
+
+
+"↓ 园区形象 ↓"
+
+
+class ParkInfo(Base, MixinModelJSONSerializer):
+    """城南新区信息"""
+    __tablename__ = 'park_info'
+    id = db.Column(db.Integer, primary_key=True, doc="资讯分类自增ID")
+    name = db.Column(db.String(20), unique=True, nullable=False)
+    url = db.Column(db.String(20))
+    dec = db.Column(db.Text)
+
+
+class ParkSmallTown(Base, MixinModelJSONSerializer):
+    """数梦小镇"""
+    __tablename__ = 'park_smalltown'
+    id = db.Column(db.Integer, primary_key=True, doc="行业资讯自增ID")
+    name = db.Column(db.String(20), unique=True, nullable=False)
+    _image = db.Column(db.String(20))
+    dec = db.Column(db.Text)
+    content = db.Column(db.Text)
+
+    @property
+    def image(self):
+        return url_for('/', filename=self.image)
+
+    @image.setter
+    def image(self, filename):
+        self._image = filename
+
+
+class ParkIndustrialPark(Base, MixinModelJSONSerializer):
+    """园区实景"""
+    __tablename__ = 'park_indupark'
+    id = db.Column(db.Integer, primary_key=True, doc="行业资讯自增ID")
+    type = db.Column(db.SmallInteger)
+    name = db.Column(db.String(20), unique=True, nullable=False)
+    _image = db.Column(db.String(20))
+
+    @property
+    def image(self):
+        return url_for('/', filename=self.image)
+
+    @image.setter
+    def image(self, filename):
+        self._image = filename
+
+
+class ParkEnterprise(Base, MixinModelJSONSerializer):
+    """企业风采"""
+    __tablename__ = 'park_enterprise'
+    id = db.Column(db.Integer, primary_key=True, doc="行业资讯自增ID")
+    name = db.Column(db.String(20))
+    _image = db.Column(db.String(20))
+    content = db.Column(db.Text)
+
+    @property
+    def image(self):
+        return url_for('/', filename=self.image)
+
+    @image.setter
+    def image(self, filename):
+        self._image = filename
+
+
+class ParkPersonal(Base, MixinModelJSONSerializer):
+    """个人风采"""
+    __tablename__ = 'park_personal'
+    id = db.Column(db.Integer, primary_key=True, doc="行业资讯自增ID")
+    company = db.Column(db.String(20))
+    job = db.Column(db.String(20))
+    _image = db.Column(db.String(20))
+    content = db.Column(db.Text)
+
+    @property
+    def image(self):
+        return url_for('/', filename=self.image)
+
+    @image.setter
+    def image(self, filename):
+        self._image = filename

@@ -4,7 +4,7 @@
 """
 from wtforms import (StringField,
                      PasswordField, IntegerField,
-                     SelectField)
+                     )
 from wtforms.validators import (DataRequired, Length, regexp, ValidationError)
 
 from app.api.seven.models import User
@@ -75,51 +75,10 @@ class UserForm(ClientForm):
 
 
 class ChangePasswordForm(BaseForm):
-    old_password = PasswordField('原密码', validators=[DataRequired(message="不能为空")])
-    new_password = PasswordField('新密码', validators=[DataRequired(message="不能为空")])
+    old_password = PasswordField('原密码', validators=[DataRequired(message="不能为空！")])
+    new_password = PasswordField('新密码', validators=[DataRequired(message="不能为空！")])
 
 
 class SearchForm(BaseForm):
     """搜索用到的关键字"""
     q = StringField(validators=DataRequired())
-
-
-class ParkPushForm(BaseForm):
-    """需求推送"""
-    choices = [(1, '资金'), (2, '人才'), (3, '物业'), (4, '政策'), (5, '其他')]
-    type = SelectField('需求分类', validators=[DataRequired()], choices=choices, coerce=int)
-    company = StringField('推送企业', validators=[DataRequired(message="企业名称不能为空！")])
-    content = StringField('推送内容', validators=[DataRequired(message="推送内容不能为空！")])
-
-    def validate_type(self, value):
-        try:
-            client = value.data
-        except ValueError as e:
-            raise e
-        self.type.data = client
-
-
-class ParkBreakingForm(BaseForm):
-    """园区大事件"""
-    title = StringField(validators=[DataRequired(message="标题不能为空！")])
-    remark = StringField(validators=[DataRequired(message="备注不能为空！")])
-
-
-class ParkNewsForm(BaseForm):
-    """新闻动态"""
-    choices = [(1, '园区公告'), (2, '政府公告')]
-    title = StringField(validators=[DataRequired(message="标题不能为空！")])
-    image = StringField(validators=[DataRequired(message="图片不能为空！")])
-    content = StringField(validators=[DataRequired(message="公告内容不能为空")])
-
-
-class ParkNoticesForm(BaseForm):
-    """园区&政府公共"""
-    choices = [(1, '园区公告'), (2, '政府公告')]
-    title = StringField(validators=[DataRequired(message="标题不能为空！")])
-    image = StringField(validators=[DataRequired(message="图片不能为空！")])
-    type = SelectField(validators=[DataRequired(message="公告类型不能为空！")], choices=choices)
-    content = StringField(validators=[DataRequired(message="公告内容不能为空")])
-
-    # def validate_title(self):
-    #     pass
