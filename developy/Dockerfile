@@ -1,24 +1,11 @@
-FROM alpine:latest
+FROM py3-flask1.0:latest
 
-RUN echo http://mirrors.ustc.edu.cn/alpine/v3.6/main > /etc/apk/repositories; \
-    echo http://mirrors.ustc.edu.cn/alpine/v3.6/community >> /etc/apk/repositories \
-    && mkdir /run/nginx
+MAINTAINER little.seven <https://soo9s.com>
 
-RUN apk update \
-    && apk upgrade \
-    && apk add --no-cache \
-       gcc \
-       g++ \
-       nginx \
-       libc-dev \
-       libffi-dev \
-       openssl-dev \
-       libxml2-dev \
-       libxslt \
-       libxslt-dev \
-       linux-headers \
-       pcre-dev \
-       python3 \
-       git
+COPY example-pro /usr/project/bigdata
 
-RUN python3 -m pip install -i https://pypi.douban.com/simple pipenv
+WORKDIR /usr/project/bigdata
+
+# 安装项目所需的第三方
+RUN pipenv install --system \
+    && supervisord -c /usr/supervisord.conf -n

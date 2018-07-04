@@ -14,6 +14,9 @@
 
  `RUN pipenv install --deploy --system`
  
+4.也可以将pipenv的包转到`requirements`里面
+`pipenv lock -r > requirements.txt`
+ 
 ## securect.py
 ```
 # -*- encoding:utf-8 -*-
@@ -46,7 +49,7 @@ http://77.art:5000/apidocs
 ## Deploy
 ### Docker部署
 
-  wait...
+ 部署脚本已经完成。 
 
 
 ## TODO LIST

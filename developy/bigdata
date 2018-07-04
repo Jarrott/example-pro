@@ -1,0 +1,8 @@
+server {
+    charset utf-8;
+    listen 80;
+
+    location / {
+        proxy_pass http://0.0.0.0:5000; # 这里是指向 gunicorn host 的服务地址
+    }
+}

@@ -11,7 +11,7 @@ sqlalchemy = "*"
 flasgger = "*"
 cymysql = "*"
 flask-httpauth = "*"
-
+flask-cors = '*'
 [dev-packages]
 
 [requires]
