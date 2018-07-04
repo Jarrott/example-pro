@@ -6,6 +6,8 @@ from flask import jsonify
 
 from app.libs.redprint import Redprint
 
+__author__ = 'Little Seven'
+
 # 前台路由
 api = Redprint('home')
 

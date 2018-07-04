@@ -8,6 +8,12 @@ from flask import url_for
 from app.libs.model_base import (db, Base,
                                  MixinModelJSONSerializer)
 
+__all__ = ['ParkPush', 'ParkBreaking',
+           'ParkNews', 'ParkEduNotices',
+           'ParkPolicy', 'ParkCircum',
+           'ParkIndustry', 'ParkMerchant', 'ParkIndustryShow',
+           'ParkIndustrialPark', 'ParkEnterprise', 'ParkPersonal']
+
 
 class ParkPush(Base, MixinModelJSONSerializer):
     """

@@ -8,6 +8,8 @@ from app.libs.enums import ClientTypeEnum
 from app.validators.forms import ClientForm, UserForm
 from app.api.seven.models.user import User
 
+__author__ = 'Little Seven'
+
 api = Redprint('client')
 
 

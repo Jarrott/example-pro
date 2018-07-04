@@ -2,16 +2,13 @@
 """
 @ Created by Seven on  2018/06/26 
 """
-
 from app.libs.error_code import Success
-from app.libs.model_base import db
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
 from app.validators.park import *
-from app.api.seven.models import (ParkPush, ParkBreaking,
-                                  ParkNews, ParkEduNotices,
-                                  ParkPolicy, ParkCircum, ParkIndustry, ParkMerchant, ParkIndustryShow,
-                                  ParkIndustrialPark, ParkEnterprise, ParkPersonal)
+from app.api.seven.models import *
+
+__author__ = 'Little Seven'
 
 api = Redprint('park')
 
@@ -162,7 +159,7 @@ def policy():
                 examples:
                   success : {"error_code": 0,"msg": "ok","request": "POST /seven/v1/policy"}
         """
-    form = ParkPolicyForm()
+    form = ParkPolicyForm().validate_for_api()
     with db.auto_commit():
         data = ParkPolicy()
         data.title = form.title.data

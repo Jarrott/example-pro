@@ -11,6 +11,8 @@ from app.libs.enums import ClientTypeEnum
 from app.libs.redprint import Redprint
 from app.validators.forms import ClientForm
 
+__author__ = 'Little Seven'
+
 api = Redprint('token')
 
 

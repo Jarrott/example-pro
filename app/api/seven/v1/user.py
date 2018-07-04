@@ -10,6 +10,8 @@ from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
 from app.validators.forms import ChangePasswordForm
 
+__author__ = 'Little Seven'
+
 api = Redprint('user')
 
 
