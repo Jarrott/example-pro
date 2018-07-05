@@ -88,7 +88,7 @@ class ParkIndustryForm(BaseForm):
     """
     choices = [(1, 'IT'), (2, 'IT2')]
     title = StringField(validators=[DataRequired(message="标题不能为空！")])
-    type = SelectField(validators=[DataRequired(message="行业分类不能为空！")], choices=choices)
+    type = SelectField(validators=[DataRequired(message="行业分类不能为空！")], choices=choices, coerce=int)
     image = StringField(validators=[DataRequired(message="图片不能为空！")])
     content = StringField(validators=[DataRequired(message="行业资讯内容不能为空！")])
 
@@ -106,7 +106,7 @@ class ParkIndustryShowForm(BaseForm):
     资讯分类
     """
     choices = [(1, 'IT'), (2, 'IT2')]
-    type = SelectField(validators=[DataRequired(message="行业分类不能为空！")], choices=choices)
+    type = SelectField(validators=[DataRequired(message="行业分类不能为空！")], choices=choices, coerce=int)
     active = IntegerField(default=0)
 
 
@@ -126,7 +126,7 @@ class ParkSmallTownForm(BaseForm):
 class ParkIndustrialParkForm(BaseForm):
     """园区实景"""
     choices = [(1, '科创大厦'), ('A', '展厅')]
-    type = SelectField(validators=[DataRequired(message="行业分类不能为空！")], choices=choices)
+    type = SelectField(validators=[DataRequired(message="行业分类不能为空！")], choices=choices, coerce=int)
     name = StringField(validators=[DataRequired(message="标题不能为空！")])
     image = StringField(validators=[DataRequired(message="请上传图片！")])
 
