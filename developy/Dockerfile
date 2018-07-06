@@ -4,7 +4,7 @@ MAINTAINER little.seven <https://soo9s.com>
 
 ADD example-pro /usr/project/bigdata
 
-COPY example-pro/developy/supervisor-app.conf /usr/supervisord.conf
+COPY example-pro/developy/supervisord.conf /usr/supervisord.conf
 COPY example-pro/developy/bigdata /etc/nginx/conf.d/default.conf
 
 WORKDIR /usr/project/bigdata
