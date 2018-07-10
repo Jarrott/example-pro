@@ -51,6 +51,76 @@ http://77.art:5000/apidocs
 
  部署脚本已经完成。 
 
+### 部署注意
+如果要使用"0.0.0.0"，启动项目，并且任何ip可以访问
+```
+pydev debugger: process 5192 is connecting
+Connected to pydev debugger (build 181.5087.37)
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+pydev debugger: process 5193 is connecting
+ * Debugger is active!
+ * Debugger PIN: 210-279-564
+127.0.0.1 - - [10/Jul/2018 14:32:41] "GET / HTTP/1.1" 0 -
+```
+
+需要这样启动项目
+
+>run.py 其余任何配置不需要修改，然后把配置中的SERVER_NAME注释掉就好了
+```
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+```
+
+
+在有域名，有固定的IP地址的时候可以这样配置
+```
+# -*- encoding:utf-8 -*-
+"""
+@ Created by Seven on  2018/06/20 
+"""
+
+# 基本配置
+
+DEBUG = True
+SERVER_NAME = '77.art:7000'
+JSON_AS_ASCII = False
+
+# Swagger 配置+跨域请求
+SWAGGER = {
+    "swagger_version": "2.0",
+    "title": "大数据平台项目",
+    # "headers": [
+    #     ('Access-Control-Allow-Origin', '*'),
+    #     ('Access-Control-Allow-Methods', "GET, POST, PUT, DELETE, OPTIONS"),
+    #     ('Access-Control-Allow-Credentials', "true"),
+    # ],
+    "specs": [
+        {
+            "version": "0.1",
+            "title": "主页API接口列表",
+            "description": 'This is the version 0.1 of Big-data API',
+            "endpoint": 'apispec_1',
+            "route": '/apispec_1.json',
+        }
+    ],
+}
+
+# Token 过期时间
+JWT_TOKEN_EXPIRES = 1 * 24 * 3600
+```
+
+> 入口文件
+
+```
+if __name__ == '__main__':
+    app.run()
+```
 
 ## TODO LIST
 - [x] 重构架构，优化代码

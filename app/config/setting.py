@@ -8,8 +8,8 @@
 DEBUG = True
 SERVER_NAME = '77.art:7000'
 JSON_AS_ASCII = False
-# Swagger 配置+跨域请求
 
+# Swagger 配置+跨域请求
 SWAGGER = {
     "swagger_version": "2.0",
     "title": "大数据平台项目",

@@ -26,7 +26,7 @@ def register_blueprints(app):
     :return:
     """
     from app.api.seven.v1 import create_blueprint
-    app.register_blueprint(create_blueprint(), url_prefix='/seven/v1')
+    app.register_blueprint(create_blueprint(), url_prefix='/seven/v1')  # subdomain='api'  api.77.art:port
 
 
 # 解决跨域
@@ -35,6 +35,7 @@ def apply_cors(app):
     CORS(app)
 
 
+# 注册swagger
 def register_swagger(app):
     from flasgger import Swagger
     template = {

@@ -22,7 +22,7 @@ def framework_error(err):
         return err
     if isinstance(err, HTTPException):
         code = err.code
-        message = err.message
+        message = err.description
         error_code = 10015
         return JsonTypeException(code, message, error_code)
     else:
