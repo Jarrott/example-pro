@@ -5,7 +5,8 @@
 from flask import g
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from app.libs.error_code import NotFound, AuthFailed
+from app.libs.data_scope import admin_scope, pro_scope, user_scope, get_defualt
+from app.libs.error_code import AuthFailed, UserNotExistException
 from app.libs.model_base import (db, Base,
                                  MixinModelJSONSerializer)
 
@@ -56,10 +57,16 @@ class User(Base, MixinModelJSONSerializer):
         """
         user = User.query.filter_by(username=username).first_or_404()
         if not user:
-            raise NotFound(message="用户没有找到 ~ !")
+            raise UserNotExistException(message="当前用户不存在 ~ !")
         if not user.check_password(password):
             raise AuthFailed()
-        scope = 'AdminScope' if user.auth == 777 else 'UserScope'
+        # scope = 'AdminScope' if user.auth == 777 else 'UserScope'
+        is_auth = {
+            777: admin_scope,
+            755: pro_scope,
+            1: user_scope
+        }
+        scope = is_auth.get(user.auth,get_defualt)()
         return {'uid': user.id, 'scope': scope}
 
     @staticmethod

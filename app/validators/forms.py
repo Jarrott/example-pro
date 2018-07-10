@@ -25,7 +25,7 @@ class ClientForm(BaseForm):
         DataRequired(message="密码不能为空"),
         regexp(r'^[A-Za-z0-9_*&$#@]{6,22}$', message='用户密码必须在6~22位之间')
     ])
-    type = IntegerField(validators=[DataRequired(message="类型不能为空!")])
+    type = IntegerField(validators=[DataRequired(message="类型不能为空!")], default=100)
 
     def validate_type(self, value):
         try:

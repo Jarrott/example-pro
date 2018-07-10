@@ -38,7 +38,7 @@ def apply_cors(app):
 def register_swagger(app):
     from flasgger import Swagger
     template = {
-        "host": "77.art:5000",
+        "host": "77.art:7000",
         "securityDefinitions": {'basicAuth': {'type': 'basic'}}
     }
     Swagger(app, template=template)

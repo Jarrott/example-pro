@@ -70,6 +70,14 @@ def super_delete_user(uid):
     return DeleteSuccess()
 
 
+@api.route('/int:<uid>', methods=['POST'])
+@auth.login_required
+def super_edit_user(uid):
+    with db.auto_commit():
+        user = User()
+        pass
+
+
 @api.route('/clear_myself', methods=['DELETE'])
 @auth.login_required
 def delete_user():

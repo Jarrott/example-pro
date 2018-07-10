@@ -19,8 +19,31 @@ api = Redprint('token')
 @api.route('', methods=['post'])
 def get_token():
     """
-    用户可以获取的接口
-    :return:
+    用户登录
+            ---
+            tags:
+              - 用户模块
+            parameters:
+              - name: username
+                in: body
+                type: string
+                required: true
+                example: simple
+              - name: password
+                in: body
+                type: string
+                required: true
+                example: 123456
+              - name: type
+                in: body
+                type: int
+                required: true
+                example: 100
+            responses:
+              200:
+                description: 返回信息
+                examples:
+                  success : {"error_code": 0,"msg": "ok","request": "POST /seven/v1/token"}
     """
     form = ClientForm().validate_for_api()
     promise = {
@@ -41,6 +64,7 @@ def get_token():
         expiration
     )
     res_token = {
+        'error_code': 0,
         'success_token': token.decode('ascii')
     }
     return jsonify(res_token), 201

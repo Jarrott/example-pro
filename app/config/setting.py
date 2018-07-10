@@ -6,18 +6,18 @@
 # 基本配置
 
 DEBUG = True
-SERVER_NAME = '77.art:5000'
+SERVER_NAME = '77.art:7000'
 JSON_AS_ASCII = False
 # Swagger 配置+跨域请求
 
 SWAGGER = {
     "swagger_version": "2.0",
     "title": "大数据平台项目",
-    "headers": [
-        ('Access-Control-Allow-Origin', '*'),
-        ('Access-Control-Allow-Methods', "GET, POST, PUT, DELETE, OPTIONS"),
-        ('Access-Control-Allow-Credentials', "true"),
-    ],
+    # "headers": [
+    #     ('Access-Control-Allow-Origin', '*'),
+    #     ('Access-Control-Allow-Methods', "GET, POST, PUT, DELETE, OPTIONS"),
+    #     ('Access-Control-Allow-Credentials', "true"),
+    # ],
     "specs": [
         {
             "version": "0.1",
