@@ -10,7 +10,7 @@ from flask_uploads import (configure_uploads, patch_request_class,
 from app.config.setting import DOCUMENTS
 from .app import Flask
 
-photos = UploadSet('photos', DOCUMENTS)
+files = UploadSet('files', DOCUMENTS)
 
 
 def register_database(app):
@@ -62,8 +62,8 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object('app.config.setting')
     app.config.from_object('app.config.securecrt')
-    app.config['UPLOADED_PHOTOS_DEST'] = os.getcwd() + '/vendor/uploads'
-    configure_uploads(app, photos)
+    app.config['UPLOADED_FILES_DEST'] = os.getcwd() + '/vendor/uploads'
+    configure_uploads(app, files)
     patch_request_class(app)
     apply_cors(app)
     register_blueprints(app)

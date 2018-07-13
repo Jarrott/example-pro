@@ -2,13 +2,15 @@
 """
 @ Created by Seven on  2018/06/20 
 """
+from flask_wtf.file import FileAllowed, FileRequired
 from wtforms import (StringField,
                      PasswordField, IntegerField,
-                     )
+                     FileField)
 from wtforms.validators import (DataRequired, Length,
                                 ValidationError,
                                 Regexp, EqualTo)
 
+from app import files
 from app.api.seven.models import User
 from app.libs.enums import ClientTypeEnum
 from app.libs.form_base import BaseForm
@@ -93,3 +95,8 @@ class ChangePasswordForm(ResetPasswordForm):
 class SearchForm(BaseForm):
     """搜索用到的关键字"""
     q = StringField(validators=[DataRequired(message="搜索关键字不能为空！")])
+
+
+class UploadForm(BaseForm):
+    """上传文件"""
+    files = FileField(validators=[FileAllowed(files, message="文件格式不正确！")])

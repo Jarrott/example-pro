@@ -2,17 +2,15 @@
 """
 @ Created by Seven on  2018/06/20 
 """
-import os
+from flask import jsonify, g
 
-from flask import jsonify, g, request
-
-from app import photos
+from app import files
 from app.api.seven.models import User, db
 from app.libs.error_code import (DeleteSuccess, Success, Failed, ImagesError)
 from app.libs.helper import change_filename
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
-from app.validators.forms import ChangePasswordForm
+from app.validators.forms import ChangePasswordForm, UploadForm
 
 __author__ = 'Little Seven'
 
@@ -159,21 +157,32 @@ def show_message():
     pass
 
 
+# @api.route('/upload', methods=['POST'])
+# @auth.login_required
+# def uploads():
+#     if request.method == 'POST':
+#         if 'photo' not in request.files:
+#             return ImagesError()
+#         file = request.files['photo']
+#         re_name = change_filename(file.filename)
+#         if file.filename == '':
+#             return ImagesError(message="没有找到这个文件！")
+#         else:
+#             try:
+#                 filename = photos.save(file, name=re_name)
+#                 return jsonify({'code': 0, 'filename': filename, 'image_url': photos.url(filename)})
+#             except Exception as e:
+#                 return ImagesError(message="上传的文件格式不支持！")
+#     else:
+#         return ImagesError(message="错误的请求方式！")
+
 @api.route('/upload', methods=['POST'])
 @auth.login_required
 def uploads():
-    if request.method == 'POST':
-        if 'photo' not in request.files:
-            return ImagesError()
-        file = request.files['photo']
-        re_name = change_filename(file.filename)
-        if file.filename == '':
-            return ImagesError(message="没有找到这个文件！")
-        else:
-            try:
-                filename = photos.save(file, name=re_name)
-                return jsonify({'code': 0, 'filename': filename, 'image_url': photos.url(filename)})
-            except Exception as e:
-                return ImagesError(message="上传的文件格式不支持！")
-    else:
-        return ImagesError(message="错误的请求方式！")
+    form = UploadForm()
+    form.validate_for_api()
+    re_name = change_filename(form.files.data.filename)
+    filename = files.save(form.files.data, name=re_name)
+    if re_name is None:
+        return ImagesError(message="文件上传失败！")
+    return jsonify({'code': 0, 'filename': filename, 'file_url': files.url(filename)})

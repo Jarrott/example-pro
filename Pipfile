@@ -13,6 +13,7 @@ cymysql = "*"
 flask-httpauth = "*"
 flask-cors = '*'
 flask-uploads = "*"
+flask-wtf = "*"
 
 [dev-packages]
 
