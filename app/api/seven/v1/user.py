@@ -157,25 +157,6 @@ def show_message():
     pass
 
 
-# @api.route('/upload', methods=['POST'])
-# @auth.login_required
-# def uploads():
-#     if request.method == 'POST':
-#         if 'photo' not in request.files:
-#             return ImagesError()
-#         file = request.files['photo']
-#         re_name = change_filename(file.filename)
-#         if file.filename == '':
-#             return ImagesError(message="没有找到这个文件！")
-#         else:
-#             try:
-#                 filename = photos.save(file, name=re_name)
-#                 return jsonify({'code': 0, 'filename': filename, 'image_url': photos.url(filename)})
-#             except Exception as e:
-#                 return ImagesError(message="上传的文件格式不支持！")
-#     else:
-#         return ImagesError(message="错误的请求方式！")
-
 @api.route('/upload', methods=['POST'])
 @auth.login_required
 def uploads():

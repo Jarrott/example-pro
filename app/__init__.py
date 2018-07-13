@@ -33,9 +33,7 @@ def register_blueprints(app):
     :return:
     """
     from app.api.seven.v1 import create_blueprint
-    from app.web import create_blueprint_web
     app.register_blueprint(create_blueprint(), url_prefix='/seven/v1')  # subdomain='api'  api.77.art:port
-    app.register_blueprint(create_blueprint_web())
 
 
 # 解决跨域
