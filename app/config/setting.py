@@ -30,7 +30,8 @@ SWAGGER = {
         }
     ],
 }
-UPLOAD_FOLDER = os.getcwd() + '/web/static'
-UPLOADS_DEFAULT_URL = 'http://127.0.0.1:5000'
+
+DOCUMENTS = tuple('jpg jpe jpeg png gif svg bmp rtf odf ods gnumeric abw doc docx xls xlsx'.split())  # 允许上传的文件类型
+
 # Token 过期时间
 JWT_TOKEN_EXPIRES = 1 * 24 * 3600

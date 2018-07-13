@@ -4,11 +4,13 @@
 """
 import os
 
-from flask_uploads import configure_uploads, patch_request_class, IMAGES, UploadSet
+from flask_uploads import (configure_uploads, patch_request_class,
+                           UploadSet)
 
+from app.config.setting import DOCUMENTS
 from .app import Flask
 
-photos = UploadSet('photos', IMAGES)
+photos = UploadSet('photos', DOCUMENTS)
 
 
 def register_database(app):
@@ -60,7 +62,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object('app.config.setting')
     app.config.from_object('app.config.securecrt')
-    app.config['UPLOADED_PHOTOS_DEST'] = os.getcwd() + '/vendor/uploads/images'
+    app.config['UPLOADED_PHOTOS_DEST'] = os.getcwd() + '/vendor/uploads'
     configure_uploads(app, photos)
     patch_request_class(app)
     apply_cors(app)
