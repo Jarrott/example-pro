@@ -12,6 +12,8 @@ flasgger = "*"
 cymysql = "*"
 flask-httpauth = "*"
 flask-cors = '*'
+flask-uploads = "*"
+
 [dev-packages]
 
 [requires]

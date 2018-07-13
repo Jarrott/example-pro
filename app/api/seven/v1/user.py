@@ -2,10 +2,13 @@
 """
 @ Created by Seven on  2018/06/20 
 """
-from flask import jsonify, g
+import os
 
+from flask import jsonify, g, request
+
+from app import photos
 from app.api.seven.models import User, db
-from app.libs.error_code import DeleteSuccess, Success, Failed
+from app.libs.error_code import (DeleteSuccess, Success, Failed, ImagesError)
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
 from app.validators.forms import ChangePasswordForm
@@ -153,3 +156,22 @@ def show_message():
     :return:
     """
     pass
+
+
+@api.route('/upload', methods=['POST'])
+@auth.login_required
+def uploads():
+    if request.method == 'POST':
+        if 'photo' not in request.files:
+            return ImagesError()
+        file = request.files['photo']
+        if file.filename == '':
+            return ImagesError(message="没有找到这个文件！")
+        else:
+            try:
+                filename = photos.save(file)
+                return jsonify({'code': 0, 'filename': filename, 'image_url': photos.url(filename)})
+            except Exception as e:
+                return ImagesError(message="ERROR")
+    else:
+        return ImagesError(message="错误的请求方式！")

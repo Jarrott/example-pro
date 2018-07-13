@@ -2,8 +2,13 @@
 """
 @ Created by Seven on  2018/06/20 
 """
+import os
+
+from flask_uploads import configure_uploads, patch_request_class, IMAGES, UploadSet
 
 from .app import Flask
+
+photos = UploadSet('photos', IMAGES)
 
 
 def register_database(app):
@@ -26,7 +31,9 @@ def register_blueprints(app):
     :return:
     """
     from app.api.seven.v1 import create_blueprint
+    from app.web import create_blueprint_web
     app.register_blueprint(create_blueprint(), url_prefix='/seven/v1')  # subdomain='api'  api.77.art:port
+    app.register_blueprint(create_blueprint_web())
 
 
 # 解决跨域
@@ -39,7 +46,7 @@ def apply_cors(app):
 def register_swagger(app):
     from flasgger import Swagger
     template = {
-        "host": "77.art:7000",
+        # "host": "77.art:5000",
         "securityDefinitions": {'basicAuth': {'type': 'basic'}}
     }
     Swagger(app, template=template)
@@ -53,6 +60,9 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object('app.config.setting')
     app.config.from_object('app.config.securecrt')
+    app.config['UPLOADED_PHOTOS_DEST'] = os.getcwd() + '/vendor/uploads/images'
+    configure_uploads(app, photos)
+    patch_request_class(app)
     apply_cors(app)
     register_blueprints(app)
     register_database(app)

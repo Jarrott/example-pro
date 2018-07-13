@@ -5,7 +5,9 @@
 from wtforms import (StringField,
                      PasswordField, IntegerField,
                      )
-from wtforms.validators import (DataRequired, Length, regexp, ValidationError)
+from wtforms.validators import (DataRequired, Length,
+                                ValidationError,
+                                Regexp, EqualTo)
 
 from app.api.seven.models import User
 from app.libs.enums import ClientTypeEnum
@@ -23,7 +25,7 @@ class ClientForm(BaseForm):
 
     password = PasswordField(validators=[
         DataRequired(message="密码不能为空"),
-        regexp(r'^[A-Za-z0-9_*&$#@]{6,22}$', message='用户密码必须在6~22位之间')
+        Regexp(r'^[A-Za-z0-9_*&$#@]{6,22}$', message='用户密码必须在6~22位之间')
     ])
     type = IntegerField(validators=[DataRequired(message="类型不能为空!")], default=100)
 
@@ -46,7 +48,7 @@ class UserForm(ClientForm):
 
     password = PasswordField(validators=[
         DataRequired(message="密码不能为空"),
-        regexp(r'^[A-Za-z0-9_*&$#@]{6,22}$', message='用户密码必须在6~22位之间')
+        Regexp(r'^[A-Za-z0-9_*&$#@]{6,22}$', message='用户密码必须在6~22位之间')
     ])
 
     nickname = StringField(
@@ -74,11 +76,20 @@ class UserForm(ClientForm):
             raise ValidationError('该昵称已被占用')
 
 
-class ChangePasswordForm(BaseForm):
-    old_password = PasswordField('原密码', validators=[DataRequired(message="不能为空！")])
-    new_password = PasswordField('新密码', validators=[DataRequired(message="不能为空！")])
+# 重置密码校验
+class ResetPasswordForm(BaseForm):
+    new_password = PasswordField('新密码', validators=[
+        DataRequired(message='新密码不可为空'),
+        Regexp(r'^[A-Za-z0-9_*&$#@]{6,22}$', message='密码长度必须在6~22位之间，包含字符、数字和 _ '),
+        EqualTo('confirm_password', message='两次输入的密码不一致，请输入相同的密码')])
+    confirm_password = PasswordField('确认新密码', validators=[DataRequired(message='请确认密码')])
+
+
+# 更改密码校验
+class ChangePasswordForm(ResetPasswordForm):
+    old_password = PasswordField('原密码', validators=[DataRequired(message='不可为空')])
 
 
 class SearchForm(BaseForm):
     """搜索用到的关键字"""
-    q = StringField(validators=DataRequired())
+    q = StringField(validators=[DataRequired(message="搜索关键字不能为空！")])

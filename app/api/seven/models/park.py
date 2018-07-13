@@ -38,7 +38,7 @@ class ParkNews(Base, MixinModelJSONSerializer):
 
     @property
     def image(self):
-        return url_for('/', filename=self.image)
+        return url_for('web.static', filename=self._image)
 
     @image.setter
     def image(self, filename):

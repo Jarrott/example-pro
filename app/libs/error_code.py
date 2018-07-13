@@ -91,5 +91,11 @@ class Forbidden(JsonTypeException):
 
 class Failed(JsonTypeException):
     code = 404
-    msg = '失败的动作 ~'
+    message = '失败的动作 ~'
     error_code = 100012
+
+
+class ImagesError(JsonTypeException):
+    code = 400
+    message = '图片上传失败'
+    error_code = 20001

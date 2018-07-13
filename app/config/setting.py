@@ -4,9 +4,11 @@
 """
 
 # 基本配置
+import os
 
 DEBUG = True
-SERVER_NAME = '77.art:7000'
+# SERVER_NAME = '77.art:5000'
+TYPE = 'Basic'
 JSON_AS_ASCII = False
 
 # Swagger 配置+跨域请求
@@ -20,14 +22,15 @@ SWAGGER = {
     # ],
     "specs": [
         {
-            "version": "0.1",
+            "version": "0.5",
             "title": "主页API接口列表",
-            "description": 'This is the version 0.1 of Big-data API',
+            "description": 'This is the version 0.5 of Big-data API',
             "endpoint": 'apispec_1',
             "route": '/apispec_1.json',
         }
     ],
 }
-
+UPLOAD_FOLDER = os.getcwd() + '/web/static'
+UPLOADS_DEFAULT_URL = 'http://127.0.0.1:5000'
 # Token 过期时间
 JWT_TOKEN_EXPIRES = 1 * 24 * 3600

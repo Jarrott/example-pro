@@ -66,7 +66,7 @@ class User(Base, MixinModelJSONSerializer):
             755: pro_scope,
             1: user_scope
         }
-        scope = is_auth.get(user.auth,get_defualt)()
+        scope = is_auth.get(user.auth, get_defualt)()
         return {'uid': user.id, 'scope': scope}
 
     @staticmethod

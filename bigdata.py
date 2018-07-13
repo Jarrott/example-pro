@@ -33,4 +33,4 @@ def framework_error(err):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')

@@ -2,31 +2,22 @@
 """
 @ Created by Seven on  2018/06/23 
 """
-from sqlalchemy import or_, extract, and_
+from flask import jsonify
+
+from app.validators.forms import SearchForm
 
 
-class Search:
-
-    @staticmethod
-    def like(q, model):
-        """
-        模糊搜索
-        :return:
-        """
-        q = '%' + q + '%'
-        data = model.query.filter(
-            or_(model.title.like(q)), model.publisher.like(q)).all()
-        return data
-
-    @staticmethod
-    def date_search(q, model):
-        historys = model.query.filter(
-            and_(
-                extract('year', model.create_time) == q.y.create_time,
-                extract('mouth', model.create_time) == q.y.create_time
-            )
-        ).all()
-        return historys
+def search(model):
+    form = SearchForm().validate_for_api()
+    q = form.q.data
+    s_data = '%' + q + '%'
+    data = model.query.filter(
+        (model.title.like(s_data))).all()
+    new_list = {
+        'error_code': 0,
+        'list': data
+    }
+    return jsonify(new_list)
 
 # __exact        精确等于 like 'aaa'
 # __iexact       精确等于 忽略大小写 ilike 'aaa'

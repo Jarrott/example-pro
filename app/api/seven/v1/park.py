@@ -2,8 +2,12 @@
 """
 @ Created by Seven on  2018/06/26 
 """
+from flask import jsonify
+from sqlalchemy import desc
+
 from app.libs.error_code import Success
 from app.libs.redprint import Redprint
+from app.libs.search import search
 from app.libs.token_auth import auth
 from app.validators.park import *
 from app.api.seven.models import *
@@ -11,6 +15,30 @@ from app.api.seven.models import *
 __author__ = 'Little Seven'
 
 api = Redprint('park')
+
+
+@api.route('/news', methods=['GET'])
+@auth.login_required
+def search_news():
+    """新闻动态搜索"""
+    data = search(ParkNews)
+    return data
+
+
+@api.route('', methods=['GET'])
+@auth.login_required
+def get_news():
+    """新闻动态列表"""
+    news_list = ParkNews.query.order_by(desc(ParkNews.id)).all()
+    return jsonify(news_list)
+
+
+@api.route('<int:nid>', methods=['GET'])
+@auth.login_required
+def deleted_news(nid):
+    """删除新闻动态"""
+    news = ParkNews.query.filter_by(id=nid).delete()
+    return Success(message="新闻的动态删除成功！")
 
 
 @api.route('', methods=['POST'])
