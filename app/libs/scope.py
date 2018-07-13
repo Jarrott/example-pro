@@ -32,7 +32,7 @@ class AdminScope(Scope):
     管理员访问的接口
     auth:777
     """
-    allow_module = ['seven_v1.user', 'seven_v1.park']
+    allow_module = ['seven_v1.user', 'seven_v1.park', 'seven_v1.upload']
 
 
 class UserScope(Scope):

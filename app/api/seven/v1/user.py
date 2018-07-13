@@ -4,13 +4,11 @@
 """
 from flask import jsonify, g
 
-from app import files
 from app.api.seven.models import User, db
-from app.libs.error_code import (DeleteSuccess, Success, Failed, ImagesError)
-from app.libs.helper import change_filename
+from app.libs.error_code import (DeleteSuccess, Success, Failed)
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
-from app.validators.forms import ChangePasswordForm, UploadForm
+from app.validators.forms import ChangePasswordForm
 
 __author__ = 'Little Seven'
 
@@ -155,15 +153,3 @@ def show_message():
     :return:
     """
     pass
-
-
-@api.route('/upload', methods=['POST'])
-@auth.login_required
-def uploads():
-    form = UploadForm()
-    form.validate_for_api()
-    re_name = change_filename(form.files.data.filename)
-    filename = files.save(form.files.data, name=re_name)
-    if re_name is None:
-        return ImagesError(message="文件上传失败！")
-    return jsonify({'code': 0, 'filename': filename, 'file_url': files.url(filename)})
