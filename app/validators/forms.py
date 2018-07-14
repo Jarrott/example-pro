@@ -2,8 +2,7 @@
 """
 @ Created by Seven on  2018/06/20 
 """
-from flask import request
-from flask_wtf.file import FileAllowed, FileRequired
+from flask_wtf.file import FileAllowed
 from wtforms import (StringField,
                      PasswordField, IntegerField,
                      FileField)
@@ -101,4 +100,4 @@ class SearchForm(BaseForm):
 class UploadForm(BaseForm):
     """上传文件"""
 
-    files = FileField(validators=[FileAllowed(files, message="文件格式不正确！")])
+    files = FileField(validators=[FileAllowed(files, message="文件格式不正确！"), DataRequired(message="文件不能为空！")])
