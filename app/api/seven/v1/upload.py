@@ -39,8 +39,8 @@ def uploads():
         """
     form = UploadForm()
     form.validate_for_api()
-    re_name = change_filename(form.files.data.filename)
-    filename = files.save(form.files.data, name=re_name)
+    re_name = change_filename(form.files.data['files'].filename)
+    filename = files.save(form.files.data['files'], name=re_name)
     if re_name is None:
         return ImagesError(message="文件上传失败！")
     return jsonify({'code': 0, 'filename': filename, 'file_url': files.url(filename)})

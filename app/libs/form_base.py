@@ -17,7 +17,7 @@ class BaseForm(Form):
         # 静默模式接受json参数
         data = request.get_json(silent=True)
         args = request.args.to_dict()
-        files = request.files['files']
+        files = request.files
         super(BaseForm, self).__init__(data=data, files=files, **args)
 
     def validate_for_api(self):

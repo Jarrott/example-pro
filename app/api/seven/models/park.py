@@ -38,7 +38,7 @@ class ParkNews(Base, MixinModelJSONSerializer):
 
     @property
     def image(self):
-        return url_for('web.static', filename=self._image)
+        return self._image
 
     @image.setter
     def image(self, filename):
@@ -58,7 +58,7 @@ class ParkEduNotices(Base, MixinModelJSONSerializer):
 
     @property
     def image(self):
-        return url_for('/', filename=self._image)
+        return self._image
 
     @image.setter
     def image(self, filename):
@@ -83,7 +83,7 @@ class ParkPolicy(Base, MixinModelJSONSerializer):
         处理图片
         :return:
         """
-        return url_for('/', filename=self._image)
+        return self._image
 
     @image.setter
     def image(self, filename):
@@ -95,7 +95,7 @@ class ParkPolicy(Base, MixinModelJSONSerializer):
         处理文件
         :return:
         """
-        return url_for('/', filename=self._file)
+        return self._file
 
     @file.setter
     def file(self, filename):
@@ -127,7 +127,7 @@ class ParkCircum(Base, MixinModelJSONSerializer):
 
     @property
     def image(self):
-        return url_for('/', filename=self.image)
+        return self._image
 
     @image.setter
     def image(self, filename):
@@ -148,7 +148,7 @@ class ParkIndustry(Base, MixinModelJSONSerializer):
 
     @property
     def image(self):
-        return url_for('/', filename=self.image)
+        return self._image
 
     @image.setter
     def image(self, filename):
@@ -198,7 +198,7 @@ class ParkSmallTown(Base, MixinModelJSONSerializer):
 
     @property
     def image(self):
-        return url_for('/', filename=self.image)
+        return self._image
 
     @image.setter
     def image(self, filename):
@@ -215,7 +215,7 @@ class ParkIndustrialPark(Base, MixinModelJSONSerializer):
 
     @property
     def image(self):
-        return url_for('/', filename=self.image)
+        return self._image
 
     @image.setter
     def image(self, filename):
@@ -232,7 +232,7 @@ class ParkEnterprise(Base, MixinModelJSONSerializer):
 
     @property
     def image(self):
-        return url_for('/', filename=self.image)
+        return self._image
 
     @image.setter
     def image(self, filename):
@@ -250,7 +250,7 @@ class ParkPersonal(Base, MixinModelJSONSerializer):
 
     @property
     def image(self):
-        return url_for('/', filename=self.image)
+        return self._image
 
     @image.setter
     def image(self, filename):
