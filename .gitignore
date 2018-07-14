@@ -9,3 +9,4 @@ app/.DS_Store
 *.pytest_cache
 imgs/
 test/
+vendor/
