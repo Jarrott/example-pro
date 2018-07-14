@@ -1,0 +1,9 @@
+version: '2'
+services:
+    web:
+      image: bigdata:v0.1
+      command: "supervisord -c /usr/supervisord.conf -n"
+      volumes:
+        - ./example-pro:/usr/project/bigdata
+      ports:
+        - "8080:80"
