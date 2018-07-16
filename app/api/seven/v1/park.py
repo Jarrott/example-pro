@@ -5,13 +5,13 @@
 from flask import jsonify
 from sqlalchemy import desc
 
-from app.api.seven.view_model.park import ParkCollection
-from app.libs.error_code import Success
-from app.libs.redprint import Redprint
-from app.libs.search import search, date_search
-from app.libs.token_auth import auth
 from app.validators.park import *
 from app.api.seven.models import *
+from app.libs.token_auth import auth
+from app.libs.redprint import Redprint
+from app.libs.error_code import Success
+from app.libs.search import search, date_search
+from app.api.seven.view_model.park import ParkCollection
 
 __author__ = 'Little Seven'
 
@@ -71,7 +71,7 @@ def get_news():
 @auth.login_required
 def deleted_news(nid):
     """删除新闻动态"""
-    news = ParkNews.query.filter_by(id=nid).delete()
+    ParkNews.query.filter_by(id=nid).delete()
     return Success(message="新闻的动态删除成功！")
 
 
