@@ -97,6 +97,12 @@ class SearchForm(BaseForm):
     q = StringField(validators=[DataRequired(message="搜索关键字不能为空！")])
 
 
+class PostSearchForm(BaseForm):
+    """post方式搜索"""
+    start_time = StringField(validators=[DataRequired()])
+    end_time = StringField(validators=[DataRequired()])
+
+
 class UploadForm(BaseForm):
     """上传文件"""
 

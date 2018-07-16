@@ -5,9 +5,10 @@
 from flask import jsonify
 from sqlalchemy import desc
 
+from app.api.seven.view_model.park import ParkCollection
 from app.libs.error_code import Success
 from app.libs.redprint import Redprint
-from app.libs.search import search
+from app.libs.search import search, date_search
 from app.libs.token_auth import auth
 from app.validators.park import *
 from app.api.seven.models import *
@@ -17,12 +18,44 @@ __author__ = 'Little Seven'
 api = Redprint('park')
 
 
-@api.route('/news', methods=['GET'])
+@api.route('/search/news', methods=['GET'])
 @auth.login_required
 def search_news():
     """新闻动态搜索"""
-    data = search(ParkNews)
+    data = search(ParkNews, ParkCollection)
     return data
+
+
+@api.route('/search/news', methods=['POST'])
+@auth.login_required
+def search_date():
+    """
+        时间范围内搜搜
+        这个方法存在的位置和路由定义都是不符合规范的
+        比如创建一个search的宏图
+        ！"有为"看到请修改！
+            ---
+            tags:
+              - 用户模块
+            parameters:
+              - name: start_time
+                in: body
+                type: string
+                required: true
+                example: 2017-07-01
+              - name: end_time
+                in: body
+                type: string
+                required: true
+                example: 2018-08-01
+            responses:
+              200:
+                description: 返回信息
+                examples:
+                  success : {"error_code": 0,"msg": "ok","request": "POST /seven/v1/user/search/news"}
+        """
+    park = date_search(ParkNews, ParkCollection)
+    return park
 
 
 @api.route('', methods=['GET'])
@@ -30,7 +63,8 @@ def search_news():
 def get_news():
     """新闻动态列表"""
     news_list = ParkNews.query.order_by(desc(ParkNews.id)).all()
-    return jsonify(news_list)
+    new_list = ParkCollection(news_list)
+    return jsonify(new_list.data)
 
 
 @api.route('<int:nid>', methods=['GET'])

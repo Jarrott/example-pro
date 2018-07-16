@@ -2,20 +2,43 @@
 """
 @ Created by Seven on  2018/06/23 
 """
+import time
+
 from flask import jsonify
 
-from app.validators.forms import SearchForm
+from app.validators.forms import SearchForm, PostSearchForm
 
 
-def search(model):
+def search(model, view_model):
     form = SearchForm().validate_for_api()
     q = form.q.data
     s_data = '%' + q + '%'
     data = model.query.filter(
         (model.title.like(s_data))).all()
+    data = view_model(data)
     new_list = {
         'error_code': 0,
-        'list': data
+        'list': data.data
+    }
+    return jsonify(new_list)
+
+
+def int_time(str_time):
+    str_time = time.strptime(str_time, "%Y-%m-%d")
+    time_stamp = int(time.mktime(str_time))
+    return time_stamp
+
+
+def date_search(model, view_model):
+    """通过时间检索内容"""
+    form = PostSearchForm().validate_for_api()
+    __start = int_time(form.start_time.data)
+    __end = int_time(form.end_time.data)
+    park = model.query.filter(model.create_time.between(__start, __end)).all()
+    park = view_model(park)
+    new_list = {
+        'error_code': 0,
+        'list': park.data
     }
     return jsonify(new_list)
 
