@@ -67,7 +67,7 @@ def get_news():
     return jsonify(new_list.data)
 
 
-@api.route('<int:nid>', methods=['GET'])
+@api.route('<int:nid>', methods=['DELETE'])
 @auth.login_required
 def deleted_news(nid):
     """删除新闻动态"""
