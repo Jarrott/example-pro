@@ -10,7 +10,7 @@ from app.api.seven.models import *
 from app.libs.token_auth import auth
 from app.libs.redprint import Redprint
 from app.libs.error_code import Success
-from app.libs.search import search, date_search
+from app.libs.search import search, date_search, all_search
 from app.api.seven.view_model.park import ParkCollection
 
 __author__ = 'Little Seven'
@@ -18,11 +18,11 @@ __author__ = 'Little Seven'
 api = Redprint('park')
 
 
-@api.route('/search/news', methods=['GET'])
+@api.route('/search/news', methods=['POST'])
 @auth.login_required
 def search_news():
     """新闻动态搜索"""
-    data = search(ParkNews, ParkCollection)
+    data = all_search(ParkNews, ParkCollection)
     return data
 
 

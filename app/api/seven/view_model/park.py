@@ -2,7 +2,7 @@
 """
 @ Created by Seven on  2018/07/16 
 """
-import time
+from app.libs.helper import str_timestamp
 
 
 class ParkCollection:
@@ -15,7 +15,7 @@ class ParkCollection:
 class ParkNewsViewModel:
     def __init__(self, park):
         self.title = park.title
-        self.create_time = time.strftime('%Y-%m-%d')
+        self.create_time = str_timestamp(park.create_time)
         self.image = park.image
         self.content = park.content
 

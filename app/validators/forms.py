@@ -99,8 +99,9 @@ class SearchForm(BaseForm):
 
 class PostSearchForm(BaseForm):
     """post方式搜索"""
-    start_time = StringField(validators=[DataRequired()])
-    end_time = StringField(validators=[DataRequired()])
+    q = StringField()
+    start_time = StringField()
+    end_time = StringField()
 
 
 class UploadForm(BaseForm):
