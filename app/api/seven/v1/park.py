@@ -10,7 +10,7 @@ from app.api.seven.models import *
 from app.libs.token_auth import auth
 from app.libs.redprint import Redprint
 from app.libs.error_code import Success
-from app.libs.search import search, date_search, all_search
+from app.libs.search import search
 from app.api.seven.view_model.park import ParkCollection
 
 __author__ = 'Little Seven'
@@ -22,7 +22,7 @@ api = Redprint('park')
 @auth.login_required
 def search_news():
     """新闻动态搜索"""
-    data = all_search(ParkNews, ParkCollection)
+    data = search(ParkNews, ParkCollection)
     return data
 
 
@@ -54,7 +54,7 @@ def search_date():
                 examples:
                   success : {"error_code": 0,"msg": "ok","request": "POST /seven/v1/user/search/news"}
         """
-    park = date_search(ParkNews, ParkCollection)
+    park = search(ParkNews, ParkCollection)
     return park
 
 
