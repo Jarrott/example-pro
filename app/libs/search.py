@@ -6,39 +6,11 @@ from flask import jsonify
 from sqlalchemy import or_
 
 from app.libs.helper import get_timestamp
-from app.validators.forms import SearchForm, PostSearchForm
+from app.validators.forms import SearchForm
 
 
 def search(model, view_model):
     form = SearchForm().validate_for_api()
-    q = form.q.data
-    s_data = '%' + q + '%'
-    data = model.query.filter(
-        (model.title.like(s_data))).all()
-    data = view_model(data)
-    new_list = {
-        'error_code': 0,
-        'list': data.data
-    }
-    return jsonify(new_list)
-
-
-def date_search(model, view_model):
-    """通过时间检索内容"""
-    form = PostSearchForm().validate_for_api()
-    __start = get_timestamp(form.start_time.data)
-    __end = get_timestamp(form.end_time.data)
-    park = model.query.filter(model.create_time.between(__start, __end)).all()
-    park = view_model(park)
-    new_list = {
-        'error_code': 0,
-        'list': park.data
-    }
-    return jsonify(new_list)
-
-
-def all_search(model, view_model):
-    form = PostSearchForm().validate_for_api()
     q = form.q.data
     __start = get_timestamp(form.start_time.data)
     __end = get_timestamp(form.end_time.data)
@@ -52,6 +24,33 @@ def all_search(model, view_model):
         'list': data.data
     }
     return jsonify(new_list)
+
+# def search(model, view_model):
+#     form = SearchForm().validate_for_api()
+#     q = form.q.data
+#     s_data = '%' + q + '%'
+#     data = model.query.filter(
+#         (model.title.like(s_data))).all()
+#     data = view_model(data)
+#     new_list = {
+#         'error_code': 0,
+#         'list': data.data
+#     }
+#     return jsonify(new_list)
+
+# def date_search(model, view_model):
+#     """通过时间检索内容"""
+#     form = PostSearchForm().validate_for_api()
+#     __start = get_timestamp(form.start_time.data)
+#     __end = get_timestamp(form.end_time.data)
+#     park = model.query.filter(model.create_time.between(__start, __end)).all()
+#     park = view_model(park)
+#     new_list = {
+#         'error_code': 0,
+#         'list': park.data
+#     }
+#     return jsonify(new_list)
+
 
 # __exact        精确等于 like 'aaa'
 # __iexact       精确等于 忽略大小写 ilike 'aaa'

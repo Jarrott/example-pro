@@ -94,11 +94,6 @@ class ChangePasswordForm(ResetPasswordForm):
 
 class SearchForm(BaseForm):
     """搜索用到的关键字"""
-    q = StringField(validators=[DataRequired(message="搜索关键字不能为空！")])
-
-
-class PostSearchForm(BaseForm):
-    """post方式搜索"""
     q = StringField()
     start_time = StringField()
     end_time = StringField()
