@@ -3,8 +3,6 @@
 @ Created by Seven on  2018/06/26 
 @ 园区综合管理
 """
-from flask import url_for
-
 from app.libs.model_base import (db, Base,
                                  MixinModelJSONSerializer)
 
@@ -33,7 +31,7 @@ class ParkNews(Base, MixinModelJSONSerializer):
     __tablename__ = 'park_news'
     id = db.Column(db.Integer, primary_key=True, doc="新闻动态自增ID")
     title = db.Column(db.String(20))
-    _image = db.Column('image', db.String(32))
+    _image = db.Column('image', db.String(50))
     content = db.Column(db.Text)
 
     @property
@@ -52,7 +50,7 @@ class ParkEduNotices(Base, MixinModelJSONSerializer):
     __tablename__ = 'park_notices'
     id = db.Column(db.Integer, primary_key=True, doc="园区动态自增ID")
     title = db.Column(db.String(20))
-    _image = db.Column('image', db.String(32))
+    _image = db.Column('image', db.String(50))
     type = db.Column(db.String(20))
     content = db.Column(db.Text)
 
@@ -72,7 +70,7 @@ class ParkPolicy(Base, MixinModelJSONSerializer):
     __tablename__ = 'park_policy'
     id = db.Column(db.Integer, primary_key=True, doc="政策动态自增ID")
     title = db.Column(db.String(20))
-    _image = db.Column('image', db.String(32))
+    _image = db.Column('image', db.String(50))
     _file = db.Column('file', db.String(32))
     type = db.Column(db.String(20))
     content = db.Column(db.Text)
@@ -119,7 +117,7 @@ class ParkCircum(Base, MixinModelJSONSerializer):
     __tablename__ = 'park_circum'
     id = db.Column(db.Integer, primary_key=True, doc="周边自增ID")
     title = db.Column(db.String(20))
-    _image = db.Column(db.String(20))
+    _image = db.Column('image', db.String(50))
     city = db.Column(db.String(20))
     url = db.Column(db.String(20))
     mobile = db.Column(db.String(20))
@@ -142,7 +140,7 @@ class ParkIndustry(Base, MixinModelJSONSerializer):
     id = db.Column(db.Integer, primary_key=True, doc="行业资讯自增ID")
     title = db.Column(db.String(20))
     type = db.Column(db.String(20))
-    _image = db.Column(db.String(20))
+    _image = db.Column('image', db.String(50))
     content = db.Column(db.String(20))
     remark = db.Column(db.String(20))
 
@@ -192,7 +190,7 @@ class ParkSmallTown(Base, MixinModelJSONSerializer):
     __tablename__ = 'park_smalltown'
     id = db.Column(db.Integer, primary_key=True, doc="行业资讯自增ID")
     name = db.Column(db.String(20), unique=True, nullable=False)
-    _image = db.Column(db.String(20))
+    _image = db.Column('image', db.String(50))
     dec = db.Column(db.Text)
     content = db.Column(db.Text)
 
@@ -211,7 +209,7 @@ class ParkIndustrialPark(Base, MixinModelJSONSerializer):
     id = db.Column(db.Integer, primary_key=True, doc="行业资讯自增ID")
     type = db.Column(db.SmallInteger)
     name = db.Column(db.String(20), unique=True, nullable=False)
-    _image = db.Column(db.String(20))
+    _image = db.Column('image', db.String(50))
 
     @property
     def image(self):
@@ -227,7 +225,7 @@ class ParkEnterprise(Base, MixinModelJSONSerializer):
     __tablename__ = 'park_enterprise'
     id = db.Column(db.Integer, primary_key=True, doc="行业资讯自增ID")
     name = db.Column(db.String(20))
-    _image = db.Column(db.String(20))
+    _image = db.Column('image', db.String(50))
     content = db.Column(db.Text)
 
     @property
@@ -245,7 +243,7 @@ class ParkPersonal(Base, MixinModelJSONSerializer):
     id = db.Column(db.Integer, primary_key=True, doc="行业资讯自增ID")
     company = db.Column(db.String(20))
     job = db.Column(db.String(20))
-    _image = db.Column(db.String(20))
+    _image = db.Column('image', db.String(50))
     content = db.Column(db.Text)
 
     @property

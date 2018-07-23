@@ -18,6 +18,14 @@ __author__ = 'Little Seven'
 api = Redprint('park')
 
 
+@api.route('/search/sort', methods=['POST'])
+@auth.login_required
+def search_sort():
+    """排序"""
+    data = ParkNews.query.filter(ParkNews.deleted.notin_('1')).order_by('-id').all()
+    return jsonify(data)
+
+
 @api.route('/search/news', methods=['POST'])
 @auth.login_required
 def search_news():
@@ -553,3 +561,13 @@ def personal():
         data.content = form.content.data
         db.session.add(data)
     return Success(message="信息修改成功！")
+
+
+@api.route('/test', methods=['GET'])
+@auth.login_required
+def ssss():
+    data = ParkNews.query.filter_by().paginate(page=int(3),
+                                               per_page=int(
+                                                   10)).items
+
+    return jsonify(data)
