@@ -33,5 +33,7 @@ SWAGGER = {
 
 DOCUMENTS = tuple('jpg jpe jpeg png gif svg bmp doc docx xls xlsx'.split())  # 允许上传的文件类型
 
+PER_PAGE = 10  # 页面显示条数
+
 # Token 过期时间
 JWT_TOKEN_EXPIRES = 1 * 24 * 3600

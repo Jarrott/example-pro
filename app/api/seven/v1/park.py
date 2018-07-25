@@ -2,7 +2,7 @@
 """
 @ Created by Seven on  2018/06/26 
 """
-from flask import jsonify
+from flask import jsonify, request
 from sqlalchemy import desc
 
 from app.validators.park import *
@@ -10,7 +10,7 @@ from app.api.seven.models import *
 from app.libs.token_auth import auth
 from app.libs.redprint import Redprint
 from app.libs.error_code import Success
-from app.libs.search import search
+from app.libs.search import api_paging
 from app.api.seven.view_model.park import ParkCollection
 
 __author__ = 'Little Seven'
@@ -30,7 +30,7 @@ def search_sort():
 @auth.login_required
 def search_news():
     """新闻动态搜索"""
-    data = search(ParkNews, ParkCollection)
+    data = api_paging(request, ParkNews)
     return data
 
 
@@ -62,7 +62,7 @@ def search_date():
                 examples:
                   success : {"error_code": 0,"msg": "ok","request": "POST /seven/v1/user/search/news"}
         """
-    park = search(ParkNews, ParkCollection)
+    park = api_paging(request, ParkNews)
     return park
 
 
