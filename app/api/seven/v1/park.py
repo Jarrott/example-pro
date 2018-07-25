@@ -30,7 +30,7 @@ def search_sort():
 @auth.login_required
 def search_news():
     """新闻动态搜索"""
-    data = api_paging(request, ParkNews)
+    data = api_paging(ParkNews)
     return data
 
 
@@ -62,7 +62,7 @@ def search_date():
                 examples:
                   success : {"error_code": 0,"msg": "ok","request": "POST /seven/v1/user/search/news"}
         """
-    park = api_paging(request, ParkNews)
+    park = api_paging(ParkNews)
     return park
 
 

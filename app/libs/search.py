@@ -10,7 +10,7 @@ from app.libs.helper import get_timestamp
 from app.validators.forms import SearchForm
 
 
-def api_paging(request, model):
+def api_paging(model):
     """请求格式：
     http://77.art:5000/seven/v1/park/search?page_num=xxx&page_size=xxx&sort=[{"field":"id","asc":"false"}]
     """
