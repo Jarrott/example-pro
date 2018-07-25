@@ -5,7 +5,7 @@
 from flask_wtf.file import FileAllowed
 from wtforms import (StringField,
                      PasswordField, IntegerField,
-                     FileField)
+                     FileField, FieldList)
 from wtforms.validators import (DataRequired, Length,
                                 ValidationError,
                                 Regexp, EqualTo)
@@ -99,6 +99,7 @@ class SearchForm(BaseForm):
     end_time = StringField()
     page_num = IntegerField(default=1)
     page_size = IntegerField()
+    sort = StringField()
 
 
 class UploadForm(BaseForm):

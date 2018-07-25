@@ -33,7 +33,7 @@ def api_paging(request, model):
             pass
         else:
             data = data.filter(and_(model.title.contains(s_data), model.create_time.between(start, end)))
-        pagination = data.order_by(build_sort(request, model)).paginate(
+        pagination = data.order_by(build_sort(model, form)).paginate(
             page=int(page_num), per_page=int(page_size)).items
 
         new_list = {
@@ -46,14 +46,18 @@ def api_paging(request, model):
         return NotFound(message="检索错误")
 
 
-def build_sort(request, model):
+def build_sort(model, form):
     """
     排序方法
     &sort=[{"field":"id","asc":"false"}]
+    或者放在请求体中
+    "sort":[{"field":"id","asc":"false"}]
     """
+
     sort_list = ""
-    if request.args.get('sort', ''):
-        sorts = json.loads(request.args.get('sort'))
+    sort = form.sort.data
+    sorts = json.loads(form.sort.data) if "[" in form.sort.data else sort
+    if sorts:
         for sort in sorts:
             field = sort["field"]
             asc = sort["asc"]
@@ -64,3 +68,17 @@ def build_sort(request, model):
             else:
                 sort_list = model.id.asc()
     return sort_list
+
+    #
+    # if request.args.get('sort', ''):
+    #     sorts = json.loads(request.args.get('sort'))
+    #     for sort in sorts:
+    #         field = sort["field"]
+    #         asc = sort["asc"]
+    #         if asc == "false" and field == "time":
+    #             sort_list = model.create_time.desc()
+    #         elif asc == "false" and field == "id":
+    #             sort_list = model.id.desc()
+    #         else:
+    #             sort_list = model.id.asc()
+    # return sort_list
