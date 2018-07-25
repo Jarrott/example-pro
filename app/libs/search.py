@@ -2,7 +2,7 @@
 """
 @ Created by Seven on  2018/06/23 
 """
-from flask import jsonify, current_app, json
+from flask import jsonify, json, current_app
 from sqlalchemy import and_
 
 from app.libs.error_code import NotFound
@@ -16,8 +16,8 @@ def api_paging(request, model):
     """
     form = SearchForm().validate_for_api()
     try:
-        page_num = request.args.get('page_num', default=1, type=int)
-        page_size = request.args.get('page_size', default=current_app.config['PER_PAGE'], type=int)
+        page_num = form.page_num.data
+        page_size = form.page_size.data or current_app.config['PER_PAGE']
         q = form.q.data
         start = get_timestamp(form.start_time.data) if form.start_time.data is not "" else None
         end = get_timestamp(form.end_time.data) if form.end_time.data is not "" else None
