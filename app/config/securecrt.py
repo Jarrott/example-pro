@@ -17,3 +17,9 @@ SQLALCHEMY_DATABASE_URI = 'mysql+cymysql://{name}:{password}@sh-cdb-4r50kts5.sql
 EMAIL_USERNAME = 'jiandan@soo9s.com'
 EMAIL_PASSWORD = 'JIANdan147'
 EMAIL_HOST = 'smtpdm.aliyun.com'
+
+# redis 配置
+REDIS_HOST = ''
+REDIS_PORT = ''
+REDIS_DB = ''
+REDIS_PASSWORD = ''

@@ -16,6 +16,7 @@ flask-uploads = "*"
 flask-wtf = "*"
 elasticsearch = "*"
 elasticsearch-dsl = "*"
+redis = "*"
 
 [dev-packages]
 
