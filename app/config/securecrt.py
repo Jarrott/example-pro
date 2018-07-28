@@ -19,7 +19,7 @@ EMAIL_PASSWORD = 'JIANdan147'
 EMAIL_HOST = 'smtpdm.aliyun.com'
 
 # redis 配置
-REDIS_HOST = ''
-REDIS_PORT = ''
-REDIS_DB = ''
+REDIS_HOST = '192.168.10.183'
+REDIS_PORT = '6379'
+REDIS_DB = '0'
 REDIS_PASSWORD = ''
