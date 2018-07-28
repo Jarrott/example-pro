@@ -2,7 +2,7 @@
 """
 @ Created by Seven on  2018/06/26 
 """
-from flask import jsonify, request
+from flask import jsonify
 from sqlalchemy import desc
 
 from app.validators.park import *
@@ -120,6 +120,46 @@ def push_demand():
         data.type = form.type.data
         db.session.add(data)
     return Success(message="需求发布成功！")
+
+
+@api.route('/edit/<int:id>', methods=['POST'])
+@auth.login_required
+def push_edit(id=None):
+    """ 编辑需求
+            ---
+            tags:
+              - 园区综合合管理-资讯管理
+            parameters:
+              - name: username
+                in: body
+                type: string
+                required: true
+                example: simple
+              - name: password
+                in: body
+                type: string
+                required: true
+                example: 123456
+              - name: type
+                in: body
+                type: int
+                required: true
+                example: 100
+            responses:
+              200:
+                description: 返回信息
+                examples:
+                  success : {"error_code": 0,"msg": "ok","request": "POST /seven/v1/park"}
+        """
+    data = ParkPush.query.filter_by(id=id).first_or_404()
+    form = ParkPushForm()
+    form.validate_for_edit(form.company.data, data)
+    with db.auto_commit():
+        data.content = form.content.data
+        data.company = form.company.data
+        data.type = form.type.data
+        db.session.add(data)
+    return Success(message="需求修改成功！")
 
 
 @api.route('/news', methods=['POST'])

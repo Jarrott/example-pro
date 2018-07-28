@@ -7,7 +7,8 @@ from wtforms import (StringField, IntegerField,
 from wtforms.validators import (DataRequired, Length,
                                 ValidationError)
 
-from app.api.seven.models import ParkEduNotices
+from app.api.seven.models import ParkEduNotices, ParkPush
+from app.libs.error_code import EditError
 from app.libs.form_base import BaseForm
 
 __all__ = ['ParkPushForm', 'ParkBreakingForm', 'ParkEnterpriseForm',
@@ -32,6 +33,16 @@ class ParkPushForm(BaseForm):
         except ValueError as e:
             raise e
         self.type.data = client
+
+    def validate_company(self, value):
+        if ParkPush.query.filter_by(company=value.data).first():
+            raise ValidationError('企业需求已经存在')
+
+    def validate_for_edit(self, value, data):
+        company_count = ParkPush.query.filter_by(company=value).count()
+        if company_count == 1 and data.company != value:
+            ''' != value["company"] 代表是修改了，并且和数据库有重复 '''
+            raise EditError('企业需求已存在')
 
 
 class ParkBreakingForm(BaseForm):
