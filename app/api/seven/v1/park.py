@@ -5,6 +5,7 @@
 from flask import jsonify
 from sqlalchemy import desc
 
+from app.libs.helper import encode_base64, decode_base64
 from app.validators.park import *
 from app.api.seven.models import *
 from app.libs.token_auth import auth
@@ -603,11 +604,21 @@ def personal():
     return Success(message="信息修改成功！")
 
 
-@api.route('/test', methods=['GET'])
+@api.route('/point', methods=['POST'])
 @auth.login_required
-def ssss():
-    data = ParkNews.query.filter_by().paginate(page=int(3),
-                                               per_page=int(
-                                                   10)).items
-
-    return jsonify(data)
+def point():
+    """实现一些需要缓存实现的功能
+    """
+    from app.libs.auto_pro import add_data_cache, get_data_cache
+    from app.validators.park import BigDataCacheForm
+    form = BigDataCacheForm().validate_for_api()
+    data = encode_base64({"title": form.title.data,
+                          "content": form.content.data,
+                          "type": form.type.data
+                          })
+    add_data_cache(form.start_time.data, form.end_time.data, data)
+    get_data = decode_base64(get_data_cache(form.start_time.data))
+    r_data = {
+        'data': get_data
+    }
+    return jsonify(r_data)

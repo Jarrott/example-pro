@@ -2,10 +2,13 @@
 """
 @ Created by Seven on  2018/07/12 
 """
+import base64
 import datetime
 import os
 import time
 import uuid
+
+from flask import json
 
 
 def change_filename(filename):
@@ -39,3 +42,16 @@ def str_timestamp(dt, fmt="%Y-%m-%d"):
     __time = time.localtime(dt)
     time_array = time.strftime(fmt, __time)
     return time_array
+
+
+def encode_base64(data):
+    """对字典进行base64加密"""
+    res_data = base64.b64encode(json.dumps(data).encode()).decode()
+    return res_data
+
+
+def decode_base64(data):
+    """对base64解密"""
+    data = base64.b64decode(data).decode('utf-8')
+    res_data = json.loads(data)
+    return res_data

@@ -158,6 +158,15 @@ class ParkPersonalForm(BaseForm):
     content = StringField(validators=[DataRequired(message="个人简介不能为空！")])
 
 
+class BigDataCacheForm(BaseForm):
+    """定时上下架功能"""
+    start_time = StringField(validators=[DataRequired()])
+    end_time = StringField(validators=[DataRequired()])
+    title = StringField(validators=[DataRequired()])
+    content = StringField(validators=[DataRequired()])
+    type = StringField(validators=[DataRequired()])
+
+
 "↓ 园区生活 ↓"
 
 "↓ 园区服务 ↓"
