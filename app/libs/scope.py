@@ -35,15 +35,62 @@ class AdminScope(Scope):
     allow_module = ['seven_v1.user', 'seven_v1.park', 'seven_v1.upload']
 
 
+class CompanyScope(Scope):
+    """
+    企业访问的接口
+    auth:755
+    """
+    allow_api = []
+
+    def __init__(self):
+        self + UserScope
+
+
+class MerchantsScope(Scope):
+    """招商管理员
+    auth:707
+    """
+    allow_api = []
+
+    def __init__(self):
+        self + UserScope
+
+
+class PropertyScope(Scope):
+    """物业管理员
+    auth:706
+    """
+    allow_api = []
+
+    def __init__(self):
+        self + UserScope
+
+
+class LiteracyScope(Scope):
+    """资讯管理员
+    auth: 705
+    """
+    allow_api = []
+
+    def __init__(self):
+        self + UserScope
+
+
+class DefaultScope(Scope):
+    """默认允许访问你的接口"""
+    allow_api = []
+
+    def __init__(self):
+        self + UserScope
+
+
 class UserScope(Scope):
     """
     用户访问的接口
-    auth:1
+    auth:100
     """
-    allow_api = ['seven_v1.user+delete_user', 'seven_v1.user+change_password']
-
-    # def __init__(self):
-    #     self + AdminScope
+    allow_api = ['seven_v1.user+delete_user', 'seven_v1.user+change_password',
+                 'seven_v1.user+get_scope']
 
 
 def is_in_scope(scope, endpoint):
@@ -51,7 +98,6 @@ def is_in_scope(scope, endpoint):
     验证权限作用域
     :param scope:
     :param endpoint:
-    :return:
     """
     scope = globals()[scope]()
     splits = endpoint.split('+')

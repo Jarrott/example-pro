@@ -4,11 +4,14 @@
 """
 from flask import jsonify, g
 
+from app.libs.scope import *
+from app.libs.data_scope import *
 from app.api.seven.models import User, db
+from app.api.seven.models.user import Role, AdminAuth
 from app.libs.error_code import (DeleteSuccess, Success, Failed)
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
-from app.validators.forms import ChangePasswordForm
+from app.validators.forms import ChangePasswordForm, RoleForm
 
 __author__ = 'Little Seven'
 
@@ -74,7 +77,10 @@ def super_delete_user(uid):
 @auth.login_required
 def super_edit_user(uid):
     with db.auto_commit():
-        user = User()
+        user = User.query.filter_by(id=int(uid)).first_or_404()
+        """
+        权限编辑添加写在这些接口中
+        """
         pass
 
 
@@ -153,3 +159,53 @@ def show_message():
     :return:
     """
     pass
+
+
+@api.route('/role', methods=['POST'])
+@auth.login_required
+def role_add():
+    """
+    添加角色
+    :return:
+    """
+    form = RoleForm().validate_for_api()
+    with db.auto_commit():
+        data = Role()
+        data.name = form.name.data
+        data.auths = form.auths.data
+    return Success(message="角色添加成功！")
+
+
+@api.route('/scope', methods=['GET'])
+@auth.login_required
+def get_scope():
+    """
+    将用户拥有的权限
+    注入到scope中
+    """
+    data = User.query.join(
+        Role
+    ).filter(
+        Role.id == User.role_id
+    ).first()
+    auths = data.role.auths
+    auths = list(map(lambda v: int(v), auths.split(",")))
+    auth_list = AdminAuth.query.all()
+    urls = [v.url for v in auth_list for val in auths if val == v.id]
+    auth_name = [v.auth_name for v in auth_list for val in auths if val == v.id]
+    append_scope = {
+        777: add_admin_scope(AdminScope),
+        755: add_company_scope(CompanyScope),
+        707: add_merchants_cope(MerchantsScope),
+        706: add_property_scope(PropertyScope),
+        705: add_literacy_scope(LiteracyScope),
+        100: add_user_scope(UserScope)
+    }
+    scope = append_scope.get(data.auth, None)
+
+    scope.allow_api.append(','.join(urls))
+
+    return jsonify({
+        'rule': data.role_id,
+        'auth_name': auth_name
+    })

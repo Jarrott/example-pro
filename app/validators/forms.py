@@ -5,7 +5,7 @@
 from flask_wtf.file import FileAllowed
 from wtforms import (StringField,
                      PasswordField, IntegerField,
-                     FileField, FieldList)
+                     FileField)
 from wtforms.validators import (DataRequired, Length,
                                 ValidationError,
                                 Regexp, EqualTo)
@@ -106,3 +106,9 @@ class UploadForm(BaseForm):
     """上传文件"""
 
     files = FileField(validators=[FileAllowed(files, message="文件格式不正确！"), DataRequired(message="文件不能为空！")])
+
+
+class RoleForm(BaseForm):
+    """添加角色"""
+    name = StringField(validators=[DataRequired()])
+    auths = StringField(validators=[DataRequired()])

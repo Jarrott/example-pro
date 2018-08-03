@@ -17,5 +17,3 @@ def add_data_cache(up, down, obj):
 def get_data_cache(up):
     ss = redis.connection.get(up)
     return ss
-
-
