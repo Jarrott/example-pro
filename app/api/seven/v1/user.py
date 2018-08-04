@@ -201,6 +201,7 @@ def get_scope():
         705: add_literacy_scope(LiteracyScope),
         100: add_user_scope(UserScope)
     }
+
     scope = append_scope.get(data.auth, None)
 
     scope.allow_api.append(','.join(urls))
@@ -209,3 +210,16 @@ def get_scope():
         'rule': data.role_id,
         'auth_name': auth_name
     })
+
+
+@api.route('/auth_list', methods=['GET'])
+@auth.login_required
+def auth_list():
+    """
+    权限列表
+    """
+    data = AdminAuth.query.all()
+    auth_list = {
+        'auth_list': data
+    }
+    return jsonify(auth_list)
