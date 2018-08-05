@@ -112,3 +112,8 @@ class RoleForm(BaseForm):
     """添加角色"""
     name = StringField(validators=[DataRequired()])
     auths = StringField(validators=[DataRequired()])
+
+
+class RoleGroupForm(BaseForm):
+    """指定用户属于哪个用户组"""
+    role = StringField(validators=[DataRequired(message="用户组不能为空")])

@@ -32,7 +32,8 @@ class AdminScope(Scope):
     管理员访问的接口
     auth:777
     """
-    allow_module = ['seven_v1.user', 'seven_v1.park', 'seven_v1.upload']
+    allow_module = ['seven_v1.user', 'seven_v1.park', 'seven_v1.upload',
+                    'seven_v1.scope']
 
 
 class CompanyScope(Scope):
@@ -76,21 +77,22 @@ class LiteracyScope(Scope):
         self + UserScope
 
 
-class DefaultScope(Scope):
-    """默认允许访问你的接口"""
-    allow_api = []
-
-    def __init__(self):
-        self + UserScope
-
-
 class UserScope(Scope):
     """
     用户访问的接口
     auth:100
     """
+    allow_api = []
+
+    def __init__(self):
+        self + DefaultScope
+
+
+class DefaultScope(Scope):
+    """默认允许访问你的接口"""
+
     allow_api = ['seven_v1.user+delete_user', 'seven_v1.user+change_password',
-                 'seven_v1.user+get_scope']
+                 'seven_v1.scope+get_scope']
 
 
 def is_in_scope(scope, endpoint):

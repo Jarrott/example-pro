@@ -5,11 +5,11 @@
 from flask import jsonify, request
 
 from app import files
-from app.libs.error_code import ImagesError
-from app.libs.helper import change_filename
-from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
+from app.libs.redprint import Redprint
+from app.libs.error_code import ImagesError
 from app.validators.forms import UploadForm
+from app.libs.helper import change_filename
 
 __author__ = 'Little Seven'
 

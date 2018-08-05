@@ -14,13 +14,13 @@ from app.libs.model_base import (db, Base,
 
 
 class User(Base, MixinModelJSONSerializer):
-    id = db.Column(db.Integer, primary_key=True, doc="用户自增ID")
-    auth = db.Column(db.SmallInteger, default=100, doc="默认组")
-    username = db.Column(db.String(24), unique=True, nullable=True, doc="用户名")
-    nickname = db.Column(db.String(24), unique=True, nullable=False, doc="用户昵称")
-    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), doc="用户权限组")
-    _image = db.Column('image', db.String(50))
-    _password = db.Column('password', db.String(100), nullable=True, doc="用户密码")
+    id = db.Column(db.Integer, primary_key=True, comment="用户自增ID")
+    auth = db.Column(db.SmallInteger, default=100, comment="默认组")
+    username = db.Column(db.String(24), unique=True, nullable=True, comment="用户名")
+    nickname = db.Column(db.String(24), unique=True, nullable=False, comment="用户昵称")
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), comment="用户权限组")
+    _image = db.Column('image', db.String(50), comment="图片地址")
+    _password = db.Column('password', db.String(100), nullable=True, comment="用户密码")
 
     @property
     def image(self):
@@ -33,7 +33,6 @@ class User(Base, MixinModelJSONSerializer):
     def _set_fields(self):
         """
         数据序列化要隐藏的字段
-        :return:
         """
         self._exclude = ['password']
 
@@ -65,7 +64,6 @@ class User(Base, MixinModelJSONSerializer):
         验证用户的作用域
         :param username:
         :param password:
-        :return:
         """
         user = User.query.filter_by(username=username).first_or_404()
         if not user:
@@ -89,7 +87,6 @@ class User(Base, MixinModelJSONSerializer):
         修改密码
         :param old_password:
         :param new_password:
-        :return:
         """
         uid = g.user.uid
         with db.auto_commit():
@@ -104,14 +101,14 @@ class User(Base, MixinModelJSONSerializer):
 
 class AdminAuth(Base, MixinModelJSONSerializer):
     """权限模快"""
-    id = db.Column(db.Integer, primary_key=True)
-    auth_name = db.Column(db.String(100), unique=True)
-    url = db.Column(db.String(255), unique=True)
+    id = db.Column(db.Integer, primary_key=True, comment="权限自增ID")
+    auth_name = db.Column(db.String(100), comment="权限名称")
+    url = db.Column(db.String(200), comment="权限地址")
 
 
 class Role(Base, MixinModelJSONSerializer):
     """角色模块"""
-    id = db.Column(db.Integer, primary_key=True, doc="自增ID")
-    name = db.Column(db.String(100), unique=True, doc="角色名")
-    auths = db.Column(db.String(600), doc="权限列表")
+    id = db.Column(db.Integer, primary_key=True, comment="自增ID")
+    name = db.Column(db.String(100), unique=True, comment="角色名")
+    auths = db.Column(db.String(255), comment="权限列表")
     role = db.relationship("User", backref='role')

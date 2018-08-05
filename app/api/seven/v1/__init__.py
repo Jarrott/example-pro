@@ -5,7 +5,7 @@
 from flask import Blueprint
 from app.api.seven.v1 import (home, client,
                               user, park,
-                              upload)
+                              upload, scope)
 from app.api.seven.v1 import token
 
 
@@ -22,4 +22,5 @@ def create_blueprint():
     token.api.register(bp_v1)
     park.api.register(bp_v1)
     upload.api.register(bp_v1)
+    scope.api.register(bp_v1)
     return bp_v1

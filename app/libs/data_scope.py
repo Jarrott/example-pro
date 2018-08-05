@@ -33,7 +33,7 @@ def get_defualt():
 
 
 def add_admin_scope(scope):
-    return scope
+    pass
 
 
 def add_company_scope(scope):
