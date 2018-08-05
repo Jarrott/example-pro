@@ -7,7 +7,7 @@ from flask import jsonify, g
 from app.libs.token_auth import auth
 from app.libs.redprint import Redprint
 from app.api.seven.models import User, db
-from app.validators.forms import ChangePasswordForm
+from app.validators.forms import ChangePasswordForm, UserTypeForm
 from app.libs.error_code import (DeleteSuccess, Success, Failed)
 
 __author__ = 'Little Seven'
@@ -146,3 +146,18 @@ def change_password():
         return Success(message="密码修改成功!")
     else:
         return Failed(message="密码修改失败!")
+
+
+@api.route('/<int:id>', methods=['POST'])
+@auth.login_required
+def user_type(id):
+    """
+    用户类型
+    企业用户 普通用户..
+    """
+    form = UserTypeForm().validate_for_api()
+    with db.auto_commit():
+        data = User.query.filter_by(id=id).first()
+        data.role_id = form.role.data
+        db.session.add(data)
+    return Success(message="用户类型修改成功！")

@@ -5,7 +5,7 @@
 from flask_wtf.file import FileAllowed
 from wtforms import (StringField,
                      PasswordField, IntegerField,
-                     FileField)
+                     FileField, SelectField)
 from wtforms.validators import (DataRequired, Length,
                                 ValidationError,
                                 Regexp, EqualTo)
@@ -117,3 +117,9 @@ class RoleForm(BaseForm):
 class RoleGroupForm(BaseForm):
     """指定用户属于哪个用户组"""
     role = StringField(validators=[DataRequired(message="用户组不能为空")])
+
+
+class UserTypeForm(BaseForm):
+    """用户类型"""
+    choices = [(775, '管理员'), (755, '企业用户'), (707, '招商管理用户'), (706, '物业用户')]
+    type = SelectField(validators=[DataRequired(message="请选择用户类型")], choices=choices, coerce=int)
