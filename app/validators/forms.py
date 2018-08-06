@@ -46,7 +46,7 @@ class ClientForm(BaseForm):
         uid = User.query.filter_by(username=self.username.data).first()
         s_code = value.data.lower()
         b_data = value.data.upper()
-        if s_code is not b_data:
+        if s_code in b_data:
             code = get_data_cache(s_code)
             if code is None:
                 raise ClientTypeError(message="请重新输入验证码！")
