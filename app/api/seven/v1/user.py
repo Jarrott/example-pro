@@ -5,7 +5,7 @@
 from flask import jsonify, g
 
 from app.api.seven.v1.scope import get_scope
-from app.libs.auto_pro import verify_code
+from app.libs.helper import verify_code
 from app.libs.token_auth import auth
 from app.libs.redprint import Redprint
 from app.api.seven.models import User, db
