@@ -4,11 +4,12 @@
 """
 from flask import jsonify, g
 
+from app.libs.auto_pro import verify_code
 from app.libs.token_auth import auth
 from app.libs.redprint import Redprint
 from app.api.seven.models import User, db
-from app.validators.forms import ChangePasswordForm, UserTypeForm
 from app.libs.error_code import (DeleteSuccess, Success, Failed)
+from app.validators.forms import ChangePasswordForm, UserTypeForm
 
 __author__ = 'Little Seven'
 
@@ -161,3 +162,13 @@ def user_type(id):
         data.role_id = form.role.data
         db.session.add(data)
     return Success(message="用户类型修改成功！")
+
+
+@api.route('/get_code', methods=['GET'])
+def get_code():
+    code = verify_code()
+    return code
+
+@api.route('/verify',methods=['POST'])
+def add_code():
+    pass

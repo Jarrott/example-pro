@@ -12,6 +12,8 @@ from wtforms.validators import (DataRequired, Length,
 
 from app import files
 from app.api.seven.models import User
+from app.libs.auto_pro import get_data_cache
+from app.libs.error_code import NotFound, ClientTypeError
 from app.libs.enums import ClientTypeEnum
 from app.libs.form_base import BaseForm
 
@@ -31,12 +33,26 @@ class ClientForm(BaseForm):
     ])
     type = IntegerField(validators=[DataRequired(message="类型不能为空!")], default=100)
 
+    code = StringField(validators=[DataRequired(message="请重新输入验证码!"), Length(4, 4)])
+
     def validate_type(self, value):
         try:
             client = ClientTypeEnum(value.data)
         except ValueError as e:
             raise e
         self.type.data = client
+
+    def validate_code(self,value):
+        uid = User.query.filter_by(username=self.username.data).first()
+        s_code = value.data.lower()
+        b_data = value.data.upper()
+        if s_code is not b_data:
+            code = get_data_cache(s_code)
+            if code is None:
+                raise ClientTypeError(message="请重新输入验证码！")
+            elif uid is None:
+                raise NotFound(message="用户不存在！")
+            self.code.data = code
 
 
 class UserForm(ClientForm):
