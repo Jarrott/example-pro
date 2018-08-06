@@ -4,6 +4,7 @@
 """
 from flask import jsonify, g
 
+from app.api.seven.v1.scope import get_scope
 from app.libs.auto_pro import verify_code
 from app.libs.token_auth import auth
 from app.libs.redprint import Redprint
@@ -43,6 +44,40 @@ def super_get_user(uid):
                   success : {"error_code": 0,"msg": "ok","request": "GET /seven/v1/<id>"}
         """
     user = User.query.filter_by(id=int(uid)).first_or_404()
+    return jsonify(user)
+
+
+@api.route('/get_user', methods=['GET'])
+@auth.login_required
+def super_get_all_user():
+    """ 查询用户
+            重写了sqlalchemy中的get_or_404
+            出错可以返回想要的报错信息
+            filter_by 过滤了软删除的用户
+            所以filter_by 也是必不可少的
+            ---
+            tags:
+              - 超级管理员模块
+            parameters:
+              - name: id
+                in: body
+                type: int
+                required: true
+                example: 1
+            responses:
+              200:
+                description: 返回信息
+                schema:
+                    id: User
+                    type: object
+                examples:
+                  success : {"error_code": 0,"msg": "ok","request": "GET /seven/v1/<id>"}
+        """
+    uid = g.user.uid
+    user = User.query.filter_by(id=int(uid)).first_or_404()
+    all_user = User.query.all()
+    if user:
+        return jsonify(all_user)
     return jsonify(user)
 
 
@@ -118,7 +153,15 @@ def get_user():
     """
     uid = g.user.uid
     user = User.query.filter_by(id=int(uid)).first_or_404()
-    return jsonify(user)
+    role = get_scope(uid)
+    try:
+        auths = {
+            'user': user,
+            'role': role
+        }
+        return jsonify(auths)
+    except AttributeError:
+        return jsonify(user)
 
 
 @api.route('/change/password', methods=['POST'])
@@ -168,7 +211,3 @@ def user_type(id):
 def get_code():
     code = verify_code()
     return code
-
-@api.route('/verify',methods=['POST'])
-def add_code():
-    pass

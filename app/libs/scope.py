@@ -92,7 +92,7 @@ class DefaultScope(Scope):
     """默认允许访问你的接口"""
 
     allow_api = ['seven_v1.user+delete_user', 'seven_v1.user+change_password',
-                 'seven_v1.scope+get_scope']
+                 'seven_v1.scope+get_scope','seven_v1.user+get_user']
 
 
 def is_in_scope(scope, endpoint):

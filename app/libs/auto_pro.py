@@ -37,7 +37,7 @@ def verify_code():
         code += v_code
     s_data = code.lower()
     if s_data:
-        redis.connection.setex(s_data, 15, s_data)
+        redis.connection.setex(s_data, 30, s_data)
         verify_code = {
             'error_code': 0,
             'code': code
