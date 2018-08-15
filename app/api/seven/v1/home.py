@@ -2,8 +2,6 @@
 """
 @ Created by Seven on  2018/06/20 
 """
-from flask import jsonify
-
 from app.libs.redprint import Redprint
 
 __author__ = 'Little Seven'
@@ -12,6 +10,6 @@ __author__ = 'Little Seven'
 api = Redprint('home')
 
 
-@api.route('/')
+@api.route('')
 def index():
-    return jsonify({"username": "test"})
+    return "1"

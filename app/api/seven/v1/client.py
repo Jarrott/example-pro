@@ -43,6 +43,12 @@ def create_client():
                   success : {"error_code": 0,"msg": "ok","request": "POST /v1/client/register"}
         """
     form = ClientForm().validate_for_api()
+    from app.libs.sms import send_sms
+    params = {'number': 1024}
+    message = send_sms('13262485427', params)
+    print(message)
+    if message:
+        print(1)
     promise = {
         ClientTypeEnum.USER_NAME: __register_user_by_username,
     }

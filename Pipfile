@@ -17,6 +17,7 @@ flask-wtf = "*"
 elasticsearch = "*"
 elasticsearch-dsl = "*"
 redis = "*"
+twilio = "*"
 aliyunsdkcore = "*"
 
 [dev-packages]

@@ -33,7 +33,7 @@ class AdminScope(Scope):
     auth:777
     """
     allow_module = ['seven_v1.user', 'seven_v1.park', 'seven_v1.upload',
-                    'seven_v1.scope']
+                    'seven_v1.scope','seven_v1.home']
 
 
 class CompanyScope(Scope):
