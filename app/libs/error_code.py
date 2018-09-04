@@ -105,3 +105,9 @@ class EditError(JsonTypeException):
     code = 404
     message = '内容已存在'
     error_code = 10014
+
+
+class EmailException(JsonTypeException):
+    code = 400
+    message = '邮件发送失败 ~'
+    error_code = 10012

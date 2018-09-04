@@ -33,6 +33,8 @@ def register_blueprints(app):
     :return:
     """
     from app.api.seven.v1 import create_blueprint
+    from app.web import create_blueprint_web
+    app.register_blueprint(create_blueprint_web())
     app.register_blueprint(create_blueprint(), url_prefix='/seven/v1')  # subdomain='api'  api.77.art:port
 
 
@@ -52,12 +54,18 @@ def register_swagger(app):
     Swagger(app, template=template)
 
 
+# 注册邮箱插件
+def register_email(app):
+    from app.libs.email import mail
+    mail.init_app(app)
+
+
 def create_app():
     """
     初始化项目
     :return:
     """
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path='', subdomain_matching=True)
     app.config.from_object('app.config.setting')
     app.config.from_object('app.config.securecrt')
     app.config['UPLOADED_FILES_DEST'] = os.getcwd() + '/vendor/uploads'
@@ -66,5 +74,6 @@ def create_app():
     apply_cors(app)
     register_blueprints(app)
     register_database(app)
+    register_email(app)
     register_swagger(app)
     return app

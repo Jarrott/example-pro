@@ -8,7 +8,7 @@ from wtforms import (StringField,
                      FileField, SelectField)
 from wtforms.validators import (DataRequired, Length,
                                 ValidationError,
-                                Regexp, EqualTo)
+                                Regexp, EqualTo, Email)
 
 from app import files
 from app.api.seven.models import User
@@ -139,3 +139,23 @@ class UserTypeForm(BaseForm):
     """用户类型"""
     choices = [(775, '管理员'), (755, '企业用户'), (707, '招商管理用户'), (706, '物业用户')]
     type = SelectField(validators=[DataRequired(message="请选择用户类型")], choices=choices, coerce=int)
+
+
+class PhoneCodeForm(BaseForm):
+    """手机验证"""
+    phone = IntegerField(validators=[DataRequired(message="手机号不能为空！")])
+
+
+# 检验重置密码邮箱的格式
+class EmailForm(BaseForm):
+    email = StringField(validators=[DataRequired(message='邮箱不可为空'),
+                                    Length(1, 64, message='长度必须在1~64之间'),
+                                    Email(message='电子邮箱不符合规范，请输入正确的邮箱')])
+    token = StringField(validators=[DataRequired(message="TOKEN不存在！")])
+
+
+class ResetPasswordForm(BaseForm):
+    password = PasswordField(validators=[
+        DataRequired(message="密码不能为空"),
+        Regexp(r'^[A-Za-z0-9_*&$#@]{6,22}$', message='用户密码必须在6~22位之间')
+    ])

@@ -7,7 +7,7 @@
 import os
 
 DEBUG = True
-# SERVER_NAME = '77.art:5000'
+SERVER_NAME = '77.art:5000'
 TYPE = 'Basic'
 JSON_AS_ASCII = False
 

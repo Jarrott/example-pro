@@ -66,6 +66,7 @@ class ParkNoticesForm(BaseForm):
     image = StringField(validators=[DataRequired(message="图片不能为空！")])
     type = SelectField(validators=[DataRequired(message="公告类型不能为空！")], choices=choices, coerce=int)
     content = StringField(validators=[DataRequired(message="公告内容不能为空！")])
+    introduction = StringField(validators=[DataRequired(message="简介不能为空！")])
 
     def validate_title(self, value):
         if ParkEduNotices.query.filter_by(title=value.data).first():

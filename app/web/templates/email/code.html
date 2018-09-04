@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>盐城大数据产业园</title>
+</head>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif !important;
+        color: #666666;
+        background-color: #5fa4f1;
+        margin: 0;
+    }
+
+    .box {
+        width: 600px;
+        background-color: #fff;
+        margin: 40px auto;
+        padding: 40px 100px 40px 40px;
+    }
+
+    .title {
+        color: #a02239;
+        font-size: 26px;
+        color: #565656;
+        font-weight: 600;
+        line-height: 50px;
+    }
+
+    .text {
+        font-size: 18px;
+        line-height: 16px;
+        color: #898989;
+        margin: 30px 0;
+    }
+
+    .button {
+        background-color: #5289ce;
+        border-radius: 20px;
+        font-size: 17px;
+        line-height: 40px;
+        width: 250px;
+        margin: 0 auto;
+        color: #fff;
+        font-weight: 600;
+
+    }
+
+    .bottom {
+        margin-top: 100px;
+        border-top: 1px solid #ddd;
+    }
+
+    .logo {
+        width: 700px;
+        margin: 40px auto 20px;
+    }
+
+    .name {
+        text-align: center;
+        line-height: 40px;
+        font-size: 20px;
+        margin-top: 20px;
+        font-weight: 600;
+    }
+</style>
+
+<body>
+<div class="logo"><img src="http://77.art:5000{{ url_for('static',filename='static/logo.png') }}"></div>
+<div class="box">
+    <div class="top" style="">
+        <a>您好，感谢您注册成为盐城新区企业大数据分析平台的一员，我们因有您而精彩！</a>
+        <div class="title">您好，亲爱的{{ user_name }}!   您的激活码是：{{ code }} <br>请及时认证您的账号，谢谢。</div>
+        <div class="text">
+            （如果您已经成功注册，请忽略此封邮件，请勿直接回复本邮件）
+        </div>
+        <!-- <div class="button">{{ code }}</div> -->
+    </div>
+    <div class="bottom">
+        <div class="name">盐城大数据产业园</div>
+    </div>
+</div>
+</body>
+
+</html>

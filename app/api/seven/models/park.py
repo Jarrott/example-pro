@@ -53,6 +53,7 @@ class ParkEduNotices(Base, MixinModelJSONSerializer):
     _image = db.Column('image', db.String(50))
     type = db.Column(db.String(20))
     content = db.Column(db.Text)
+    introduction = db.Column(db.String(30))
 
     @property
     def image(self):

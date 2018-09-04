@@ -116,9 +116,10 @@ def push_demand():
     form = ParkPushForm().validate_for_api()
     with db.auto_commit():
         data = ParkPush()
-        data.content = form.content.data
-        data.company = form.company.data
-        data.type = form.type.data
+        form.populate_obj(data)  # 使用此语法可以简化以下写法
+        # data.content = form.content.data
+        # data.company = form.company.data
+        # data.type = form.type.data
         db.session.add(data)
     return Success(message="需求发布成功！")
 
@@ -156,9 +157,10 @@ def push_edit(id=None):
     form = ParkPushForm()
     form.validate_for_edit(form.company.data, data)
     with db.auto_commit():
-        data.content = form.content.data
-        data.company = form.company.data
-        data.type = form.type.data
+        form.populate_obj(data)  # 使用此语法可以简化以下写法
+        # data.content = form.content.data
+        # data.company = form.company.data
+        # data.type = form.type.data
         db.session.add(data)
     return Success(message="需求修改成功！")
 
@@ -194,9 +196,10 @@ def news():
     form = ParkNewsForm().validate_for_api()
     with db.auto_commit():
         data = ParkNews()
-        data.title = form.title.data
-        data.image = form.image.data
-        data.content = form.content.data
+        form.populate_obj(data)  # 使用此语法可以简化以下写法
+        # data.title = form.title.data
+        # data.image = form.image.data
+        # data.content = form.content.data
         db.session.add(data)
     return Success(message="新闻发布成功!")
 
@@ -233,10 +236,11 @@ def notices():
     form = ParkNoticesForm().validate_for_api()
     with db.auto_commit():
         data = ParkEduNotices()
-        data.title = form.title.data
-        data.image = form.image.data
-        data.type = form.type.data
-        data.content = form.content.data
+        form.populate_obj(data)  # 使用此语法可以简化以下写法
+        # data.title = form.title.data
+        # data.image = form.image.data
+        # data.type = form.type.data
+        # data.content = form.content.data
         db.session.add(data)
     return Success(message="添加公告成功！")
 
@@ -273,11 +277,12 @@ def policy():
     form = ParkPolicyForm().validate_for_api()
     with db.auto_commit():
         data = ParkPolicy()
-        data.title = form.title.data
-        data.type = form.type.data
-        data.image = form.image.data
-        data.file = form.file.data
-        data.content = form.content.data
+        form.populate_obj(data)  # 使用此语法可以简化以下写法
+        # data.title = form.title.data
+        # data.type = form.type.data
+        # data.image = form.image.data
+        # data.file = form.file.data
+        # data.content = form.content.data
         db.session.add(data)
     return Success(message="政策发布成功！")
 
@@ -309,8 +314,9 @@ def breaking():
     form = ParkBreakingForm().validate_for_api()
     with db.auto_commit():
         data = ParkBreaking()
-        data.title = form.title.data
-        data.note = form.remark.data
+        form.populate_obj(data)  # 使用此语法可以简化以下写法
+        # data.title = form.title.data
+        # data.note = form.remark.data
         db.session.add(data)
     return Success(message="事件保存成功！")
 
@@ -342,12 +348,13 @@ def circum():
     form = ParkCircumForm().validate_for_api()
     with db.auto_commit():
         data = ParkCircum()
-        data.title = form.title.data
-        data.image = form.image.data
-        data.city = form.city.data
-        data.url = form.url.data
-        data.mobile = form.mobile.data
-        data.content = form.content.data
+        form.populate_obj(data)  # 使用此语法可以简化以下写法
+        # data.title = form.title.data
+        # data.image = form.image.data
+        # data.city = form.city.data
+        # data.url = form.url.data
+        # data.mobile = form.mobile.data
+        # data.content = form.content.data
         db.session.add(data)
     return Success(message="周边园区文章发布成功！")
 
@@ -379,10 +386,11 @@ def industry():
     form = ParkIndustryForm().validate_for_api()
     with db.auto_commit():
         data = ParkIndustry()
-        data.title = form.title.data
-        data.type = form.type.data
-        data.image = form.image.data
-        data.content = form.content.data
+        form.populate_obj(data)  # 使用此语法可以简化以下写法
+        # data.title = form.title.data
+        # data.type = form.type.data
+        # data.image = form.image.data
+        # data.content = form.content.data
         db.session.add(data)
     return Success(message="行业资讯内容发布成功！")
 
@@ -414,8 +422,9 @@ def merchant():
     form = ParkMerchantForm().validate_for_api()
     with db.auto_commit():
         data = ParkMerchant()
-        data.title = form.title.data
-        data.content = form.content.data
+        form.populate_obj(data)  # 使用此语法可以简化以下写法
+        # data.title = form.title.data
+        # data.content = form.content.data
         db.session.add(data)
     return Success(message="招商资讯发布成功！")
 
@@ -447,8 +456,9 @@ def industry_show():
     form = ParkIndustryShowForm().validate_for_api()
     with db.auto_commit():
         data = ParkIndustryShow()
-        data.type = form.type.data
-        data.active = form.type.data
+        form.populate_obj(data)  # 使用此语法可以简化以下写法
+        # data.type = form.type.data
+        # data.active = form.type.data
         db.session.add(data)
     return Success(message="行业资讯分类")
 
@@ -517,9 +527,10 @@ def industrialpark():
     form = ParkIndustrialParkForm().validate_for_api()
     with db.auto_commit():
         data = ParkIndustrialPark()
-        data.type = form.type.data
-        data.name = form.name.data
-        data.image = form.image.data
+        form.populate_obj(data)  # 使用此语法可以简化以下写法
+        # data.type = form.type.data
+        # data.name = form.name.data
+        # data.image = form.image.data
         db.session.add(data)
     return Success(message="信息修改成功！")
 
@@ -556,9 +567,10 @@ def enterprise():
     form = ParkEnterpriseForm().validate_for_api()
     with db.auto_commit():
         data = ParkEnterprise()
-        data.name = form.name.data
-        data.image = form.image.data
-        data.content = form.content.data
+        form.populate_obj(data)  # 使用此语法可以简化以下写法
+        # data.name = form.name.data
+        # data.image = form.image.data
+        # data.content = form.content.data
         db.session.add(data)
     return Success(message="信息修改成功！")
 
@@ -595,11 +607,12 @@ def personal():
     form = ParkPersonalForm().validate_for_api()
     with db.auto_commit():
         data = ParkPersonal()
-        data.nickname = form.name.data
-        data.company = form.company.data
-        data.job = form.job.data
-        data.image = form.image.data
-        data.content = form.content.data
+        form.populate_obj(data)  # 使用此语法可以简化以下写法
+        # data.nickname = form.name.data
+        # data.company = form.company.data
+        # data.job = form.job.data
+        # data.image = form.image.data
+        # data.content = form.content.data
         db.session.add(data)
     return Success(message="信息修改成功！")
 

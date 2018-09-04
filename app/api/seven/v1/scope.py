@@ -2,7 +2,7 @@
 """
 @ Created by Seven on  2018/08/05 
 """
-from flask import jsonify
+from flask import jsonify, g
 
 from app.libs.scope import *
 from app.libs.data_scope import *
@@ -95,6 +95,7 @@ def auth_list():
     """
     data = AdminAuth.query.all()
     _list = {
+        'scope': g.user.scope,
         'auth_list': data
     }
     return jsonify(_list)

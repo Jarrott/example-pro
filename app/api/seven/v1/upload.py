@@ -2,7 +2,7 @@
 """
 @ Created by Seven on  2018/07/13 
 """
-from flask import jsonify, request
+from flask import jsonify, request, current_app
 
 from app import files
 from app.libs.token_auth import auth
@@ -10,6 +10,7 @@ from app.libs.redprint import Redprint
 from app.libs.error_code import ImagesError
 from app.validators.forms import UploadForm
 from app.libs.helper import change_filename
+from openpyxl import load_workbook
 
 __author__ = 'Little Seven'
 
@@ -65,7 +66,7 @@ def many_files():
                 examples:
                   success : {"code": 0,"file_url": "http://77.art:5000/uploads/files/123123.jpg", \
                   "filename": "123123.jpg"}
-        """
+    """
     _file = []
     _file_url = []
     form = UploadForm().validate_for_api()
@@ -75,3 +76,22 @@ def many_files():
         _file.append(filename)
         _file_url.append(files.url(filename))
     return jsonify({'code': 0, 'filename': _file, 'file_url': _file_url})
+
+
+@api.route('/get_excel', methods=['POST'])
+# @auth.login_required
+def get_excel():
+    form = UploadForm().validate_for_api()
+    re_name = change_filename(form.files.data['files'].filename)
+    files.save(form.files.data['files'], name=re_name)
+    file = load_workbook(current_app.config['UPLOADED_FILES_DEST'] + "/" + re_name)
+    sheet_name = file.get_sheet_names()  # 获取所有工作表名称
+    name = str("".join(sheet_name))
+    a_sheet = file[name]
+    data_sheet = []
+    for row in a_sheet.values:
+        data_sheet.append(row)
+    for i in data_sheet[1:]:
+        data = list(tuple(i))
+        print(data[0])
+    return jsonify({'1': '1'})

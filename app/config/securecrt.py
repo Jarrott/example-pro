@@ -11,7 +11,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 SQLALCHEMY_DATABASE_URI = 'mysql+cymysql://{name}:{password}@sh-cdb-4r50kts5.sql.tencentcdb.com:63198/{db}' \
     .format(
-    name='root', password='jiandan123*#', db='example')
+    name='root', password='jiandan123*#', db='jiandan')
 
 # 阿里云邮件服务
 
@@ -36,10 +36,13 @@ REDIS_PORT = '6379'
 REDIS_DB = '0'
 REDIS_PASSWORD = ''
 
-# 云片短信服务
+# 短信信息设置
 
-YUN_TOKEN = 'c04eb26377b4031e896ace19afd1b02b'
-SMS_HOST = 'sms.yunpian.com'
-SMS_PORT = 443
-SMS_VERSION = 'v2'
-SMS_URI = SMS_HOST + "/" + SMS_VERSION + "/sms/tpl_single_send.json"
+MAIL_SERVER = 'smtp.qq.com'
+MAIL_PORT = 465
+MAIL_USE_SSL = True
+MAIL_USE_TSL = False
+MAIL_USERNAME = '1134844912@qq.com'
+MAIL_PASSWORD = 'hmkqwnuvadgdffbd'
+MAIL_SUBJECT_PREFIX = '[城南大数据产业园 账户激活]'
+MAIL_SENDER = '城南大数据产业园 <1134844912@qq.com>'

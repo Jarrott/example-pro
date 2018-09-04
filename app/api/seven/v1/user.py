@@ -10,7 +10,7 @@ from app.libs.token_auth import auth
 from app.libs.redprint import Redprint
 from app.api.seven.models import User, db
 from app.libs.error_code import (DeleteSuccess, Success, Failed)
-from app.validators.forms import ChangePasswordForm, UserTypeForm
+from app.validators.forms import ChangePasswordForm, UserTypeForm, PhoneCodeForm, EmailForm, ResetPasswordForm
 
 __author__ = 'Little Seven'
 
@@ -211,3 +211,91 @@ def user_type(id):
 def get_code():
     code = verify_code()
     return code
+
+
+@api.route('/phone_code', methods=['POST'])
+@auth.login_required
+def get_phone_code():
+    from app.libs.sms import send_sms
+    params = {'number': 1024}
+    form = PhoneCodeForm().validate_for_api()
+    phone = form.phone.data
+    send_sms(phone, params)
+    return Success(message="短信已发送！")
+
+
+@api.route('/forget/password', methods=['POST'])
+def forget_password_request():
+    """ 密码重置请求
+        发送注册邮箱
+        ---
+        parameters:
+          - name: email
+            in: body
+            type: string
+            required: true
+            example: 123456@qq.com
+        responses:
+          200:
+            description: 返回
+            examples:
+              success: {"error_code": 0,"msg": "请前往邮箱重置你的密码","request": "POST /persona/v1/user/reset/password"}
+    """
+    form = EmailForm().validate_for_api()
+    reset_email = form.email.data
+    user = User.query.filter_by(email=reset_email).first_or_404()
+    from app.libs.email import send_reset_password_email
+    send_reset_password_email(email_address=form.email.data, email_title='[重置密码]',
+                              user_name=user.nickname,
+                              token=user.generate_token(),
+                              template='email/reset_password.html')
+    return Success(message="请前往邮箱重置你的密码")
+
+
+@api.route('/reset/password/<token>', methods=['POST'])
+def forget_password(token):
+    """ 密码重置
+        接受密码重置
+        ---
+        parameters:
+          - name: token
+            in: path
+            type: string
+            required: true
+            example: nkkhknkajkhsdljiodaojaiojdoi
+          - name: new_password
+            type: string
+            required: true
+            example: 147258
+          - name: confirm_password
+            type: string
+            required: true
+            example: 147258
+        responses:
+          200:
+            description: 个人信息
+            examples:
+              user: {'red', 'green', 'blue'}
+    """
+    form = ResetPasswordForm().validate_for_api()
+    ok = User.reset_password(token, form.new_password.data)
+    if ok:
+        return Success(message='密码重置成功')
+    else:
+        return Failed(message="密码重置失败，请输入正确密码")
+
+
+@api.route('/email_code', methods=['POST'])
+def send_email():
+    from app.libs.email import send_code_email
+    form = EmailForm().validate_for_api()
+    try:
+        send_code_email(email_address=form.email.data,
+                        email_title="[激活账户]",
+                        template="email/code.html",
+                        user_name="seven",
+                        code="1024")
+
+        return Success(message="邮件发送成功！")
+    except Exception as e:
+        return e

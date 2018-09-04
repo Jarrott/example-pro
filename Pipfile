@@ -19,6 +19,8 @@ elasticsearch-dsl = "*"
 redis = "*"
 twilio = "*"
 aliyunsdkcore = "*"
+flask-mail = "*"
+openpyxl = "*"
 
 [dev-packages]
 
