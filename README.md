@@ -1,5 +1,5 @@
 ## 城南大数据平台项目
-
+本项目以停止维护.2019-5-28,公开源代码
 ### 架构与代码重构
 
 
@@ -32,11 +32,11 @@ SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 SQLALCHEMY_DATABASE_URI = 'mysql+cymysql://{name}:{password}@sh-cdb-4r50kts5.sql.tencentcdb.com:63198/{db}' \
     .format(
-    name='root', password='jiandan123*#', db='example')
+    name='root', password='*#', db='example')
 
 # 阿里云邮件服务
-EMAIL_USERNAME = 'jiandan@soo9s.com'
-EMAIL_PASSWORD = 'JIANdan147'
+EMAIL_USERNAME = ''
+EMAIL_PASSWORD = ''
 EMAIL_HOST = 'smtpdm.aliyun.com'
 ```
 
