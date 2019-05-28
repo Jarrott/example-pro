@@ -15,7 +15,7 @@ with app.app_context():
         user.nickname = "Admin"
         user.username = "jiandan"
         user.password = "jiandan"
-        user.email = "xujiaqi_50@163.com"
+        user.email = "xxxx@.com"
         user.auth = 777
         db.session.add(user)
 
