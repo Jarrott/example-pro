@@ -1,3 +1,11 @@
+<h4 align="center">大数据平台(服务端) | <a href="http://doc.cms.7yue.pro/" target="_blank"></a>停止维护</h4>
+
+<p align="center">
+  <a href="http://flask.pocoo.org/docs/1.0/" rel="nofollow">
+  <img src="https://img.shields.io/badge/Flask-1.0.2-green.svg" alt="flask version" data-canonical-src="https://img.shields.io/badge/Flask-1.0.2-green.svg" style="max-width:100%;"></a>
+  <a href="https://www.python.org" rel="nofollow"><img src="https://img.shields.io/badge/Python-%3E3.5-yellowgreen.svg" alt="Python version" data-canonical-src="https://img.shields.io/badge/Python-%3E3.5-yellowgreen.svg" style="max-width:100%;"></a>
+</p>
+
 ## 城南大数据平台项目
 本项目以停止维护.2019-5-28,公开源代码
 ### 架构与代码重构
