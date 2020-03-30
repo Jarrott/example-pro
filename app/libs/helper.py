@@ -31,6 +31,13 @@ def get_timestamp(dt, fmt="%Y-%m-%d"):
     "
     :param dt: 指 datetime.now()
     :param fmt: 格式化的类型
+    
+    :doc : 当然可以采用datetime库
+    
+    :code:   from datetime import datetime
+             dt = datetime.now()
+             dt.strftime("%c") # 显示格式 年/月/日/ 时：分：秒
+    
     """
     if dt is not None:
         time_array = time.strptime(dt, fmt)
