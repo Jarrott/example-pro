@@ -27,11 +27,10 @@ def change_filename(filename):
 
 
 def get_timestamp(dt, fmt="%Y-%m-%d"):
-    """将2018-xx-xx格式数据转换为'1531881731'
+    """将 年-月-日格式数据转换为'1531881731'
     "
-    :param dt:
-    :param fmt:
-    :return:
+    :param dt: 指 datetime.now()
+    :param fmt: 格式化的类型
     """
     if dt is not None:
         time_array = time.strptime(dt, fmt)
@@ -40,7 +39,7 @@ def get_timestamp(dt, fmt="%Y-%m-%d"):
 
 
 def str_timestamp(dt, fmt="%Y-%m-%d"):
-    """将1531881731类型转换为'2018-xx-xx'
+    """将1531881731类型转换为'年-月-日'
     """
     __time = time.localtime(dt)
     time_array = time.strftime(fmt, __time)
