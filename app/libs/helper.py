@@ -37,6 +37,7 @@ def get_timestamp(dt, fmt="%Y-%m-%d"):
     :code:   from datetime import datetime
              dt = datetime.now()
              dt.strftime("%c") # 显示格式 年/月/日/ 时：分：秒
+                               # dt.strftime("%Y-%m-%d %H:%M:%S") 👆重置文件名称的方法里用到了此格式。
     
     """
     if dt is not None:
